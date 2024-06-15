@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc4;
+package io.github.ndimovt.arrays;
 
 import java.util.ArrayList;
 import java.util.Arrays;

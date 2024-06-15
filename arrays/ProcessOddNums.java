@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc4;
+package io.github.ndimovt.arrays;
 
 import java.util.Scanner;
 import java.util.Arrays;

@@ -1,9 +1,9 @@
-package io.github.ndimovt.exc4;
+package io.github.ndimovt.arrays;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class SumEven {
+public class EvenOddSubstraction {
     private static Scanner inn = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -13,12 +13,15 @@ public class SumEven {
     }
     private static int sumOfEven(String[] arr){
         int [] nums = Arrays.stream(arr).mapToInt(Integer::parseInt).toArray();
-        int sum = 0;
+        int sumEven = 0;
+        int sumOdd = 0;
         for(int a : nums){
             if(a % 2 == 0){
-                sum += a;
+                sumEven += a;
+            }else{
+                sumOdd += a;
             }
         }
-        return sum;
+        return sumEven - sumOdd;
     }
 }
