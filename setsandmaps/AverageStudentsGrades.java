@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc9;
+package io.github.ndimovt.setsandmaps;
 
 import java.util.ArrayList;
 import java.util.Map;
