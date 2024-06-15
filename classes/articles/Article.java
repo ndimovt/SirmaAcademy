@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc5.articles;
+package io.github.ndimovt.classes.articles;
 
 public class Article {
     private String title;

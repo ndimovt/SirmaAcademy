@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc5.cartasks;
+package io.github.ndimovt.classes.cartasks;
 
 public class Car {
     private String brandt;

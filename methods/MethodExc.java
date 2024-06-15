@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc6;
+package io.github.ndimovt.methods;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

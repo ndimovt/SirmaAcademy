@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc5.task3;
+package io.github.ndimovt.classes.task3;
 
 public class BankAccount {
     private static int nextId = 1;

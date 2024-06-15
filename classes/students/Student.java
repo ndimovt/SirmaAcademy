@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc5.students;
+package io.github.ndimovt.classes.students;
 
 public class Student {
     private String name;

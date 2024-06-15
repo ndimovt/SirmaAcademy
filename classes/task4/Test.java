@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc5.task4;
+package io.github.ndimovt.classes.task4;
 
 public class Test {
     public static void main(String[] args) {

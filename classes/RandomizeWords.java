@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc5;
+package io.github.ndimovt.classes;
 
 import java.util.Random;
 import java.util.Scanner;

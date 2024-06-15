@@ -1,7 +1,6 @@
-package io.github.ndimovt.exc5.students;
+package io.github.ndimovt.classes.students;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class StudentTest {

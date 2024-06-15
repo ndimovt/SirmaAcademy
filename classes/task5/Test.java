@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc5.task5;
+package io.github.ndimovt.classes.task5;
 
 import java.util.Scanner;
 
