@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc1;
+package io.github.ndimovt.introduction;
 
 import java.util.Scanner;
 
