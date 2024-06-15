@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc8;
+package io.github.ndimovt.matrix;
 
 import java.util.Scanner;
 

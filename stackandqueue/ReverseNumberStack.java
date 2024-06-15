@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc7;
+package io.github.ndimovt.stackandqueue;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;

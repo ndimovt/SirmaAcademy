@@ -1,13 +1,13 @@
-package io.github.ndimovt.exc7;
+package io.github.ndimovt.stackandqueue;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.Scanner;
 
-public class BasicStackOperations {
+public class BasicQueueOperation {
     private static Scanner inn = new Scanner(System.in);
-    private static Deque<Integer> queue = new ArrayDeque<>();
+    private static Deque<Integer> myStack = new ArrayDeque<>();
 
     public static void main(String[] args) {
         String command = inn.nextLine();
@@ -27,20 +27,20 @@ public class BasicStackOperations {
         }
         while(count <= elementsToPush){
             int n = inn.nextInt();
-            queue.offer(n);
+            myStack.push(n);
             count++;
         }
         for (int i = 0; i < elementsToPop ; i++) {
-            queue.poll();
+            myStack.pop();
         }
-        if (!queue.isEmpty()) {
+        if (!myStack.isEmpty()) {
             int min = Integer.MAX_VALUE;
-            for (int num : queue) {
+            for (int num : myStack) {
                 if (num < min) {
                     min = num;
                 }
             }
-            if (queue.contains(elementToCheck)) {
+            if (myStack.contains(elementToCheck)) {
                 System.out.println("true");
             } else {
                 System.out.println(min);
