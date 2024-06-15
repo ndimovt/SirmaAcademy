@@ -1,4 +1,4 @@
-package io.github.ndimovt.exc2;
+package io.github.ndimovt.conditionalstatements;
 
 import java.util.HashMap;
 import java.util.Scanner;
