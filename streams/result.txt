@@ -1,0 +1,4 @@
+This is a simple file with words of different lengths.
+This is a First ONE file with words of different lengths
+Java programming lengths!
+second line from output file
