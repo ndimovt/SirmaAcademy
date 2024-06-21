@@ -25,6 +25,6 @@ public class ElectronicsItem extends InventoryItem {
 
     @Override
     public String getDetails() {
-        return getQuantity() +" "+ getName() +" "+ getDescription() +" "+ getCategory() +" "+ getPrice() +" "+ warrantyPeriod;
+        return getId() +" "+ getQuantity() +" "+ getName() +" "+ getDescription() +" "+ getCategory() +" "+ getPrice() +" "+ warrantyPeriod;
     }
 }

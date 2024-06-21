@@ -37,7 +37,7 @@ public class GrocerieItem extends InventoryItem {
 
     @Override
     public String getDetails() {
-        return  getQuantity() +" "+ getName() +" "+ getDescription() +" "+ getCategory() +" "+ getPrice() +" "+ weight;
+        return  getId() +" "+ getQuantity() +" "+ getName() +" "+ getDescription() +" "+ getCategory() +" "+ getPrice() +" "+ weight;
     }
 
 }

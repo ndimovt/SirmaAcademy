@@ -1,5 +1,6 @@
 package io.github.ndimovt.extengandinterfaces.inventory;
 
+import io.github.ndimovt.extengandinterfaces.inventory.datahandling.DataBaseCRUD;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.ElectronicsItem;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.FragileItem;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.GrocerieItem;
@@ -10,10 +11,12 @@ import java.util.*;
 public class CLI {
     private static Scanner scanner = new Scanner(System.in);
     private static Map<Integer, InventoryItem> items = new HashMap<>();
-    //private static FileWriting = new FileWriting();
+    private static Map<Integer, InventoryItem> unfitItems = new HashMap<>();
+    private static List<String> content = new ArrayList<>();
+    private static DataBaseCRUD db = new DataBaseCRUD();
 
     public static void main(String[] args) {
-        //items = fileWriting.loadInventory();
+        content = db.read();
         boolean running = true;
 
         while (running) {
@@ -43,7 +46,7 @@ public class CLI {
                     //items = fileWriting.loadInventory();
                     break;
                 case "exit":
-                    items.forEach((k,v) -> System.out.println(k+"/"+v.getDetails()));
+                    //items.forEach((k,v) -> System.out.println(k+"/"+v.getDetails()));
                     running = false;
                     break;
                 default:
@@ -74,6 +77,7 @@ public class CLI {
             case "fragile":
                 System.out.println("Enter item details (id,quantity,name,description,weight,price,isbroken):");
                 String[] fdetails = scanner.nextLine().split(",");
+                boolean isFit = false;
                 item = new FragileItem(
                         Integer.parseInt(fdetails[0]),
                         Integer.parseInt(fdetails[1]),
@@ -81,28 +85,40 @@ public class CLI {
                         fdetails[3],
                         Double.parseDouble(fdetails[4]),
                         Double.parseDouble(fdetails[5]),
-                        Boolean.parseBoolean(fdetails[6])
+                        isFit = Boolean.parseBoolean(fdetails[6])
                 );
-                insert(items, item);
+                if(isFit){
+                    unfitItems.put(item.getId(), item);
+
+                }else{
+                    items.put(item.getId(), item);
+                }
                 break;
             case "groceries":
                 System.out.println("Enter item details (id,quantity,name,description,weight in kg,price per kg,ready for celling):");
                 String[] groceries = scanner.nextLine().split(",");
+                boolean isPerished = false;
                 item = new GrocerieItem(
                         Integer.parseInt(groceries[0]),
                         Integer.parseInt(groceries[1]),
                         groceries[2],groceries[3],
                         Double.parseDouble(groceries[4]),
                         Double.parseDouble(groceries[5]),
-                        Boolean.parseBoolean(groceries[6])
+                        isPerished = Boolean.parseBoolean(groceries[6])
                 );
-                insert(items, item);
+                if(isPerished){
+                    unfitItems.put(item.getId(), item);
+
+                }else{
+                    items.put(item.getId(), item);
+                }
                 break;
             default:
                 System.out.println("Invalid item type.");
                 return;
         }
-        System.out.println("Item added.");
+        db.itemUnfitForSale(unfitItems);
+        db.create(items);
     }
 
     private static void removeItem() {
@@ -116,7 +132,7 @@ public class CLI {
     }
 
     private static void listItems() {
-        items.forEach((k,v) -> System.out.println(v.getDetails()));
+        content.forEach(System.out::println);
     }
 
     private static void categorizeItems() {
@@ -127,9 +143,5 @@ public class CLI {
     private static void processOrder() {
         System.out.println("Order processing functionality not implemented yet.");
     }
-    private static void insert(Map<Integer, InventoryItem> map, InventoryItem item){
-        if(!item.isPerishable() || !item.isBreakable()) {
-            map.put(item.getId(), item);
-        }
-    }
+
 }
