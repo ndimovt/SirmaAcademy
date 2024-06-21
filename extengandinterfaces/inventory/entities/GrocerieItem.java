@@ -1,17 +1,14 @@
 package io.github.ndimovt.extengandinterfaces.inventory.entities;
 
-import java.util.Date;
-
 public class GrocerieItem extends InventoryItem {
     private double weight;
     private boolean perished;
-    public GrocerieItem(int id, int quantity, String name, String description, double weight, double price, boolean perished, Date expiration) {
+    public GrocerieItem(int id, int quantity, String name, String description, double weight, double price, boolean perished) {
         setId(id);
         setQuantity(quantity);
         setPrice(price);
         setName(name);
         setDescription(description);
-        setExpiration(expiration);
         this.weight = weight;
         this.perished = perished;
         setCategory("Groceries");
@@ -40,7 +37,7 @@ public class GrocerieItem extends InventoryItem {
 
     @Override
     public String getDetails() {
-        return  getId() +" "+ getQuantity() +" "+ getName() +" "+ getDescription() +" "+ getCategory() +" "+ getPrice() +" "+ weight;
+        return  getQuantity() +" "+ getName() +" "+ getDescription() +" "+ getCategory() +" "+ getPrice() +" "+ weight;
     }
 
 }

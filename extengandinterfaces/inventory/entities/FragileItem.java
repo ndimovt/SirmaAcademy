@@ -33,6 +33,6 @@ public class FragileItem extends InventoryItem {
 
     @Override
     public String getDetails() {
-        return getId() +" "+ getQuantity() +" "+ getName() +" "+ getDescription() +" "+ getCategory() +" "+ getPrice() +" "+ weight;
+        return getQuantity() +" "+ getName() +" "+ getDescription() +" "+ getCategory() +" "+ getPrice() +" "+ weight;
     }
 }

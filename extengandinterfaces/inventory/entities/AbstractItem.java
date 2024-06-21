@@ -2,7 +2,6 @@ package io.github.ndimovt.extengandinterfaces.inventory.entities;
 
 import io.github.ndimovt.extengandinterfaces.inventory.attributes.*;
 
-import java.util.Date;
 
 public abstract class AbstractItem implements Breakable, Categorizable, Item, Perishable, Sellable {
     private String name;
@@ -11,7 +10,6 @@ public abstract class AbstractItem implements Breakable, Categorizable, Item, Pe
     private boolean perishable;
     private double price;
     private String description;
-    private Date expiration;
 
     public String getName() {
         return name;
@@ -19,14 +17,6 @@ public abstract class AbstractItem implements Breakable, Categorizable, Item, Pe
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(Date expiration) {
-        this.expiration = expiration;
     }
 
     public void setDescription(String description) {

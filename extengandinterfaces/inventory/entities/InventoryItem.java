@@ -25,11 +25,4 @@ public class InventoryItem extends AbstractItem {
     public String getDetails() {
         return null;
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InventoryItem that = (InventoryItem) o;
-        return id == that.id;
-    }
 }
