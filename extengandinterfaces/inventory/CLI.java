@@ -28,7 +28,9 @@ public class CLI {
                     addItem();
                     break;
                 case "remove":
-                    removeItem();
+                    System.out.println("Enter id of item you want to remove: ");
+                    int id = scanner.nextInt();
+                    db.delete(id);
                     break;
                 case "list":
                     listItems();
@@ -46,7 +48,6 @@ public class CLI {
                     //items = fileWriting.loadInventory();
                     break;
                 case "exit":
-                    //items.forEach((k,v) -> System.out.println(k+"/"+v.getDetails()));
                     running = false;
                     break;
                 default:
@@ -119,16 +120,6 @@ public class CLI {
         }
         db.itemUnfitForSale(unfitItems);
         db.create(items);
-    }
-
-    private static void removeItem() {
-        System.out.println("Enter item ID to remove:");
-        int id = Integer.parseInt(scanner.nextLine());
-        if (items.remove(id) != null) {
-            System.out.println("Item removed.");
-        } else {
-            System.out.println("Item not found.");
-        }
     }
 
     private static void listItems() {
