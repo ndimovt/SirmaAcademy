@@ -12,7 +12,7 @@ public class CLI {
     private static Scanner scanner = new Scanner(System.in);
     private static Map<Integer, InventoryItem> items = new HashMap<>();
     private static Map<Integer, InventoryItem> unfitItems = new HashMap<>();
-    private static List<String> content = new ArrayList<>();
+    private static Map<Integer, String> content = new HashMap<>();
     private static DataBaseCRUD db = new DataBaseCRUD();
 
     public static void main(String[] args) {
@@ -123,7 +123,7 @@ public class CLI {
     }
 
     private static void listItems() {
-        content.forEach(System.out::println);
+        content.forEach((k,v) -> System.out.println(v));
     }
 
     private static void categorizeItems() {

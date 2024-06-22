@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,9 +46,15 @@ public class DataBaseCRUD {
             ie.printStackTrace();
         }
     }
-    public List<String> read(){
+    public Map<Integer, String> read(){
+        Map<Integer, String> items = new HashMap<>();
         try{
-            return Files.readAllLines(Paths.get(DATABASE.toString()));
+            List<String> list =  Files.readAllLines(Paths.get(DATABASE.toString()));
+            for(String s : list){
+                String[] arr = s.split(" ");
+                items.put(Integer.parseInt(arr[0]), s);
+            }
+            return items;
         }catch (IOException ie){
             ie.printStackTrace();
         }
