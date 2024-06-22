@@ -3,13 +3,13 @@ package io.github.ndimovt.extengandinterfaces.inventory.orderprocessing;
 public class OrderItem {
     private int id;
     private int quantity;
-    private String name;
+    private PaymentMethods paymentMethod;
     private double price;
 
-    public OrderItem(int id, int quantity, String name, double price) {
+    public OrderItem(int id, int quantity,PaymentMethods paymentMethod, double price) {
         this.id = id;
         this.quantity = quantity;
-        this.name = name;
+        this.paymentMethod = paymentMethod;
         this.price = price;
     }
 
@@ -17,4 +17,17 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id: " + id +
+                ", quantity: " + quantity +
+                ", paymentMethod: " + paymentMethod +
+                ", price: " + price +
+                '}';
+    }
 }

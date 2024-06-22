@@ -6,11 +6,14 @@ import io.github.ndimovt.extengandinterfaces.inventory.entities.ElectronicsItem;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.FragileItem;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.GrocerieItem;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.InventoryItem;
+import io.github.ndimovt.extengandinterfaces.inventory.orderprocessing.Order;
 import io.github.ndimovt.extengandinterfaces.inventory.orderprocessing.OrderItem;
+import io.github.ndimovt.extengandinterfaces.inventory.orderprocessing.PaymentMethods;
 
 import java.util.*;
 
 public class CLI {
+    private static Order order = new Order();
     private static Scanner scanner = new Scanner(System.in);
     private static Map<Integer, InventoryItem> items = new HashMap<>();
     private static Map<Integer, InventoryItem> unfitItems = new HashMap<>();
@@ -21,11 +24,13 @@ public class CLI {
     public static void main(String[] args) {
         content = db.read();
         boolean running = true;
-
+        System.out.println("Enter payment option(cash, paypal, visa mastercard)");
+        String method = scanner.nextLine();
+        System.out.println("Enter money you want to spend: ");
+        double sum = scanner.nextDouble();scanner.nextLine();
         while (running) {
-            System.out.println("Choose an option: add, remove item, delete, list, categorize, order, save, load, exit");
+            System.out.println("Choose an option: add, remove item, delete, list, categorize, order, save, check order, pay, exit");
             String choice = scanner.nextLine();
-
             switch (choice.toLowerCase()) {
                 case "add":
                     addItem();
@@ -46,25 +51,45 @@ public class CLI {
                     categorizeItems();
                     break;
                 case "order":
-                    System.out.println("Please check quantities carefully! For finalize order enter final");
-                    System.out.println("Enter money sum: ");
-                    double test = 0;
-                    double sum = scanner.nextDouble();
-                    scanner.nextLine();
-                    System.out.println("Enter product id: ");
-                    String product = scanner.nextLine();
-                    while(!product.equalsIgnoreCase("final")) {
-                        System.out.println("Enter quantity: ");
-                        int quantity = scanner.nextInt();
-                        double cost = processOrder(Integer.parseInt(product), quantity);
-                        sum -= cost;
-                        System.out.println("Enter next product id (or 'final' to finish): ");
-                        scanner.nextLine();
-                        product = scanner.nextLine();
-                    }
-                    System.out.println(sum);
+                    OrderItem oi = null;
+                    System.out.println("Please check quantities carefully! For finalize order enter 'final'");
 
-                    break;
+                    String product;
+                    int quantity = 0;
+                    int productId = 0;
+                    do {
+                        System.out.println("Enter product id: ");
+                        product = scanner.nextLine();
+
+                        if (product.equalsIgnoreCase("final")) {
+                            break;
+                        }
+                        try {
+                            productId = Integer.parseInt(product);
+                            System.out.println("Enter quantity: ");
+                            quantity = scanner.nextInt();
+                            scanner.nextLine(); // Consume newline left by nextInt()
+
+                        } catch (NumberFormatException e) {
+                            System.err.println("Invalid product id. Please enter a valid integer.");
+                            scanner.nextLine(); // Consume newline to avoid infinite loop
+                        }
+
+                        if(method.equalsIgnoreCase("visa")) {
+                            oi = new OrderItem(Integer.parseInt(product), quantity, PaymentMethods.VISA, processOrder(productId , quantity));
+                            order.insertOrder(oi);
+                        } else if (method.equalsIgnoreCase("cash")) {
+                            oi = new OrderItem(Integer.parseInt(product), quantity, PaymentMethods.Cash, processOrder(productId , quantity));
+                            order.insertOrder(oi);
+                        } else if (method.equalsIgnoreCase("mastercard")) {
+                            oi = new OrderItem(Integer.parseInt(product), quantity, PaymentMethods.MASTERCARD, processOrder(productId, quantity));
+                            order.insertOrder(oi);
+                        } else if (method.equalsIgnoreCase("paypal")) {
+                            oi = new OrderItem(Integer.parseInt(product), quantity, PaymentMethods.PayPal, processOrder(productId , quantity));
+                            order.insertOrder(oi);
+                        }
+                    } while (!product.equalsIgnoreCase("final"));
+            break;
                 case "save":
                     System.out.println("Enter id: ");
                     int cid = scanner.nextInt();
@@ -72,8 +97,16 @@ public class CLI {
                     int q = scanner.nextInt();
                     db.updateQuantity(cid, q, content);
                     break;
-                case "load":
-                    //items = fileWriting.loadInventory();
+                case "check":
+                    order.print();
+                    break;
+                case "pay":
+                    if(sum - order.totalCost() >= 0){
+                        System.out.println("Order successfully payed!");
+                    }else{
+                        System.out.println("Not enough money!");
+                        System.exit(0);
+                    }
                     break;
                 case "exit":
                     running = false;
@@ -178,13 +211,11 @@ public class CLI {
         if(content.containsKey(id)){
             String value = content.get(id);
             String[] arr = value.split("/");
-            System.out.println(Double.parseDouble(arr[5]));
             return quantity * Double.parseDouble(arr[5]);
         }
         return 0.0;
     }
-    private static void printMap(Map<? extends Object, String> map){
+    private static void printMap(Map<?, String> map){
         map.forEach((k,v) -> System.out.println(v));
     }
-
 }
