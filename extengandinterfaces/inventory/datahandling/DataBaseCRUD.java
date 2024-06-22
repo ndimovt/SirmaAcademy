@@ -69,19 +69,22 @@ public class DataBaseCRUD {
             ie.printStackTrace();
         }
     }
-    public void update(int id, int quantity){
-        try{
-            List<String> content = Files.readAllLines(Paths.get(DATABASE.toString()));
-            List<String> updatedQuantity = content.stream().map(record -> {
-                String[] object = record.split(" ");
-                    if(object[0].equals(String.valueOf(id))){
-                        object[1] = String.valueOf(quantity);
-                        record = Arrays.toString(object);
-                    }return record;
-            }).toList();
-        }catch (IOException ie){
-            ie.printStackTrace();
+    public void updateQuantity(int id, int quantity, Map<Integer, String> map){
+        StringBuilder sb = new StringBuilder();
+        if(map.containsKey(id)){
+            String[] value = map.get(id).split(" ");
+            int oldQuantity = Integer.parseInt(value[1]);
+            if(oldQuantity - quantity >= 0) {
+                value[1] = String.valueOf(oldQuantity - quantity);
+                for (String s : value) {
+                    sb.append(s).append(" ");
+                }
+                map.put(id, sb.toString());
+            }else{
+                System.out.println("Shop does not have enough quantity. Please check catalogue or enter less quantity!");
+            }
         }
+
     }
 
 }

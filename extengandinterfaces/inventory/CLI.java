@@ -13,6 +13,7 @@ public class CLI {
     private static Map<Integer, InventoryItem> items = new HashMap<>();
     private static Map<Integer, InventoryItem> unfitItems = new HashMap<>();
     private static Map<Integer, String> content = new HashMap<>();
+    private static Map<Integer, Integer> available = new HashMap<>();
     private static DataBaseCRUD db = new DataBaseCRUD();
 
     public static void main(String[] args) {
@@ -42,12 +43,17 @@ public class CLI {
                     processOrder();
                     break;
                 case "save":
-                    //fileWriting.saveInventory(items);
+                    System.out.println("Enter id: ");
+                    int cid = scanner.nextInt();
+                    System.out.println("Enter new quantity: ");
+                    int q = scanner.nextInt();
+                    db.updateQuantity(cid, q, content);
                     break;
                 case "load":
                     //items = fileWriting.loadInventory();
                     break;
                 case "exit":
+                    content.forEach((k,v) -> System.out.println(v));
                     running = false;
                     break;
                 default:
