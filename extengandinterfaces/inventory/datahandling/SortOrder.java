@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class SortOrder implements Sort{
+    //implementing Sort interface
     private static final File DATABASE = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\extengandinterfaces\\inventory\\storage\\storage.txt");
     public Map<Integer, String> byCategory(Map<Integer, String> map, String category){
         map = new TreeMap<>();

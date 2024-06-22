@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DataBaseCRUD implements CRUD{
+    //implementing all CRUD methods
     private static final File DATABASE = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\extengandinterfaces\\inventory\\storage\\storage.txt");
     private static final File UNFIT = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\extengandinterfaces\\inventory\\storage\\unfitForSale.txt");
 
@@ -31,6 +32,7 @@ public class DataBaseCRUD implements CRUD{
             ie.printStackTrace();
         }
     }
+    //if item is broken or perished it goes in uniftForSale.txt
     public void itemUnfitForSale(Map<Integer, InventoryItem> map){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(UNFIT))){
             map.forEach((k,v) -> {

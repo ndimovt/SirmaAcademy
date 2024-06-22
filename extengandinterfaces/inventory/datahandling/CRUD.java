@@ -5,6 +5,7 @@ import io.github.ndimovt.extengandinterfaces.inventory.entities.InventoryItem;
 import java.util.Map;
 
 public interface CRUD {
+    //basic crud operations for working with database, in this case storage.txt
     void create(Map<Integer, InventoryItem> map);
     void itemUnfitForSale(Map<Integer, InventoryItem> map);
     Map<Integer, String> read();

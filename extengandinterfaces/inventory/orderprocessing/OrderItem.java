@@ -1,6 +1,7 @@
 package io.github.ndimovt.extengandinterfaces.inventory.orderprocessing;
 
 public class OrderItem {
+    //separate items from order list
     private int id;
     private int quantity;
     private PaymentMethods paymentMethod;
@@ -20,7 +21,6 @@ public class OrderItem {
     public double getPrice() {
         return price;
     }
-
     @Override
     public String toString() {
         return "OrderItem{" +
