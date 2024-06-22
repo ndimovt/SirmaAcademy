@@ -21,18 +21,22 @@ public class CLI {
         boolean running = true;
 
         while (running) {
-            System.out.println("Choose an option: add, remove, list, categorize, order, save, load, exit");
+            System.out.println("Choose an option: add, remove item, delete, list, categorize, order, save, load, exit");
             String choice = scanner.nextLine();
 
             switch (choice.toLowerCase()) {
                 case "add":
                     addItem();
                     break;
-                case "remove":
+                case "remove item":
                     System.out.println("Enter id of item you want to remove: ");
                     int id = scanner.nextInt();
-                    db.delete(id);
+                    db.removeItem(content, id);
                     break;
+                case "delete":
+                    System.out.println("Enter id of item you want to delete from database: ");
+                    int deleteId = scanner.nextInt();
+                    db.delete(deleteId);
                 case "list":
                     listItems();
                     break;

@@ -8,13 +8,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DataBaseCRUD {
+public class DataBaseCRUD implements CRUD{
     private static final File DATABASE = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\extengandinterfaces\\inventory\\storage\\storage.txt");
     private static final File UNFIT = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\extengandinterfaces\\inventory\\storage\\unfitForSale.txt");
 
@@ -84,7 +83,13 @@ public class DataBaseCRUD {
                 System.out.println("Shop does not have enough quantity. Please check catalogue or enter less quantity!");
             }
         }
-
+    }
+    public void removeItem(Map<Integer, String> map, int id){
+        if(map.containsKey(id)){
+            map.remove(id);
+        }else{
+            System.out.println("Item with id: "+id+" is not existing!");
+        }
     }
 
 }
