@@ -50,7 +50,7 @@ public class DataBaseCRUD implements CRUD{
         try{
             List<String> list =  Files.readAllLines(Paths.get(DATABASE.toString()));
             for(String s : list){
-                String[] arr = s.split(" ");
+                String[] arr = s.split("/");
                 items.put(Integer.parseInt(arr[0]), s);
             }
             return items;
@@ -69,14 +69,14 @@ public class DataBaseCRUD implements CRUD{
         }
     }
     public void updateQuantity(int id, int quantity, Map<Integer, String> map){
-        StringBuilder sb = new StringBuilder();
         if(map.containsKey(id)){
-            String[] value = map.get(id).split(" ");
+            StringBuilder sb = new StringBuilder();
+            String[] value = map.get(id).split("/");
             int oldQuantity = Integer.parseInt(value[1]);
             if(oldQuantity - quantity >= 0) {
                 value[1] = String.valueOf(oldQuantity - quantity);
                 for (String s : value) {
-                    sb.append(s).append(" ");
+                    sb.append(s).append("/");
                 }
                 map.put(id, sb.toString());
             }else{

@@ -1,6 +1,7 @@
 package io.github.ndimovt.extengandinterfaces.inventory;
 
 import io.github.ndimovt.extengandinterfaces.inventory.datahandling.DataBaseCRUD;
+import io.github.ndimovt.extengandinterfaces.inventory.datahandling.SortOrder;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.ElectronicsItem;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.FragileItem;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.GrocerieItem;
@@ -86,7 +87,7 @@ public class CLI {
                 items.put(item.getId(), item);
                 break;
             case "fragile":
-                System.out.println("Enter item details (id,quantity,name,description,weight,price,isbroken):");
+                System.out.println("Enter item details (id,quantity,name,description,weight,price,ready for celling):");
                 String[] fdetails = scanner.nextLine().split(",");
                 boolean isFit = false;
                 item = new FragileItem(
@@ -98,7 +99,7 @@ public class CLI {
                         Double.parseDouble(fdetails[5]),
                         isFit = Boolean.parseBoolean(fdetails[6])
                 );
-                if(isFit){
+                if(!isFit){
                     unfitItems.put(item.getId(), item);
 
                 }else{
@@ -117,7 +118,7 @@ public class CLI {
                         Double.parseDouble(groceries[5]),
                         isPerished = Boolean.parseBoolean(groceries[6])
                 );
-                if(isPerished){
+                if(!isPerished){
                     unfitItems.put(item.getId(), item);
 
                 }else{
@@ -137,12 +138,29 @@ public class CLI {
     }
 
     private static void categorizeItems() {
-        // This would involve more complex logic, such as sorting or filtering based on category
-        System.out.println("Categorize items functionality not implemented yet.");
+        SortOrder so = new SortOrder();
+        System.out.println("Choose how you want to sort items by: category, name or price");
+        String choice = scanner.nextLine();
+        if(choice.equalsIgnoreCase("category")){
+            String category = scanner.nextLine();
+            Map<Integer, String> sortedByCat = so.byCategory(content, category);
+            printMap(sortedByCat);
+        } else if (choice.equalsIgnoreCase("name")) {
+            Map<String, String> sortedByName = so.byName();
+            printMap(sortedByName);
+        } else if (choice.equalsIgnoreCase("price")) {
+            Map<Double, String> sortedByPrice = so.byPrice();
+            printMap(sortedByPrice);
+        }else{
+            System.out.println("Invalid sorting criteria!");
+        }
     }
 
     private static void processOrder() {
         System.out.println("Order processing functionality not implemented yet.");
+    }
+    private static void printMap(Map<? extends Object, String> map){
+        map.forEach((k,v) -> System.out.println(v));
     }
 
 }
