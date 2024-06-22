@@ -6,6 +6,7 @@ import io.github.ndimovt.extengandinterfaces.inventory.entities.ElectronicsItem;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.FragileItem;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.GrocerieItem;
 import io.github.ndimovt.extengandinterfaces.inventory.entities.InventoryItem;
+import io.github.ndimovt.extengandinterfaces.inventory.orderprocessing.OrderItem;
 
 import java.util.*;
 
@@ -45,7 +46,24 @@ public class CLI {
                     categorizeItems();
                     break;
                 case "order":
-                    processOrder();
+                    System.out.println("Please check quantities carefully! For finalize order enter final");
+                    System.out.println("Enter money sum: ");
+                    double test = 0;
+                    double sum = scanner.nextDouble();
+                    scanner.nextLine();
+                    System.out.println("Enter product id: ");
+                    String product = scanner.nextLine();
+                    while(!product.equalsIgnoreCase("final")) {
+                        System.out.println("Enter quantity: ");
+                        int quantity = scanner.nextInt();
+                        double cost = processOrder(Integer.parseInt(product), quantity);
+                        sum -= cost;
+                        System.out.println("Enter next product id (or 'final' to finish): ");
+                        scanner.nextLine();
+                        product = scanner.nextLine();
+                    }
+                    System.out.println(sum);
+
                     break;
                 case "save":
                     System.out.println("Enter id: ");
@@ -58,7 +76,6 @@ public class CLI {
                     //items = fileWriting.loadInventory();
                     break;
                 case "exit":
-                    content.forEach((k,v) -> System.out.println(v));
                     running = false;
                     break;
                 default:
@@ -156,8 +173,15 @@ public class CLI {
         }
     }
 
-    private static void processOrder() {
-        System.out.println("Order processing functionality not implemented yet.");
+    private static double processOrder(int id, int quantity) {
+        db.updateQuantity(id,quantity, content);
+        if(content.containsKey(id)){
+            String value = content.get(id);
+            String[] arr = value.split("/");
+            System.out.println(Double.parseDouble(arr[5]));
+            return quantity * Double.parseDouble(arr[5]);
+        }
+        return 0.0;
     }
     private static void printMap(Map<? extends Object, String> map){
         map.forEach((k,v) -> System.out.println(v));
