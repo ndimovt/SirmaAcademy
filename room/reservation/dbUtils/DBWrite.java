@@ -27,7 +27,7 @@ public class DBWrite implements Write{
             ie.printStackTrace();
         }
     }
-    public void writeClientHistory(String name, BookingInformation bi){
+    public void writeClientHistory(String name, BookingInformation bi, String status){
         File file = null;
         if(!dir.getName().equals(name)) {
             file = new File(dir, name + "History.txt");
@@ -37,6 +37,7 @@ public class DBWrite implements Write{
         try(BufferedWriter bwr = new BufferedWriter(new FileWriter(file, true))){
             bwr.newLine();
             bwr.write(bi.toString());
+            bwr.write(status);
         }catch (IOException ie){
             ie.printStackTrace();
         }

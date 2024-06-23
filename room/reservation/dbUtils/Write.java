@@ -5,5 +5,5 @@ import io.github.ndimovt.room.reservation.User;
 
 public interface Write {
     void createUser(String name, User user);
-    void writeClientHistory(String name, BookingInformation bi);
+    void writeClientHistory(String name, BookingInformation bi, String status);
 }
