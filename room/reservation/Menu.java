@@ -4,11 +4,13 @@ import io.github.ndimovt.room.reservation.dbUtils.DBRead;
 import io.github.ndimovt.room.reservation.dbUtils.DBWrite;
 import io.github.ndimovt.room.reservation.roomInfo.RoomPrice;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class Menu {
+    private static final double COMPENSATION = 0.5;
     private static Scanner inn = new Scanner(System.in);
     private static DBWrite dbWrite = new DBWrite();
     private static DBRead dbRead = new DBRead();
@@ -66,15 +68,15 @@ public class Menu {
                                         String dateIn = inn.nextLine();
                                         System.out.println("Enter date you want to check out: ");
                                         String dateOut = inn.nextLine();
-                                        BookingInformation bookInfo = new BookingInformation(u.getUsername(), room, dateIn, dateOut);
-                                        dbWrite.writeClientHistory(u.getUsername(), bookInfo, null);
                                         double toPay = totalPrice(room, dateIn, dateOut);
+                                        BookingInformation bookInfo = new BookingInformation(u.getUsername(), room, dateIn, dateOut, toPay);
+                                        dbWrite.writeClientHistory(u.getUsername(), bookInfo);
+
                                         System.out.println("Total cost will be: "+toPay);
                                         double result = u.getDeposit() - toPay;
                                         if(result >= 0){
                                             System.out.println("Room successfully booked");
                                             dbWrite.updateMoneyBalance(u.getUsername(), result);
-                                            //System.out.println(takenRoom);
                                             available.remove(takenRoom);
                                             unavailable.add(takenRoom);
                                         }else{
@@ -94,6 +96,24 @@ public class Menu {
                                     System.out.println("Operation successful!");
                                     break;
                                 case 5:
+                                    System.out.println("Select room: ");
+                                    inn.nextLine();
+                                    String cancel = inn.nextLine();
+                                    int removeRoom = Integer.parseInt(cancel.substring(0, cancel.length()-1));
+                                    System.out.println("Enter date you want to check in(day.month.year): ");
+                                    String dateIn = inn.nextLine();
+                                    System.out.println("Enter date you want to check out: ");
+                                    String dateOut = inn.nextLine();
+                                    List<String> list = dbRead.history(dateIn, dateOut, u.getUsername());
+                                    list.forEach(System.out::println);
+                                    System.out.println("Enter id: ");
+                                    String id = inn.nextLine();
+                                    BookingInformation bookInfo = dbRead.getInfo(id, u.getUsername());
+                                    dbWrite.canceled(u.getUsername(),bookInfo.toString());
+                                    double returnMoney = bookInfo.getPrice() * COMPENSATION;
+                                    dbWrite.updateMoneyBalance(u.getUsername(), returnMoney);
+                                    unavailable.remove(removeRoom);
+                                    available.add(removeRoom);
                                     break;
                                 case 6:
                                     isChosen = false;

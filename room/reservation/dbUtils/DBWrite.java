@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBWrite implements Write{
     private DBRead dbr = new DBRead();
@@ -27,7 +29,7 @@ public class DBWrite implements Write{
             ie.printStackTrace();
         }
     }
-    public void writeClientHistory(String name, BookingInformation bi, String status){
+    public void writeClientHistory(String name, BookingInformation bi){
         File file = null;
         if(!dir.getName().equals(name)) {
             file = new File(dir, name + "History.txt");
@@ -37,7 +39,6 @@ public class DBWrite implements Write{
         try(BufferedWriter bwr = new BufferedWriter(new FileWriter(file, true))){
             bwr.newLine();
             bwr.write(bi.toString());
-            bwr.write(status);
         }catch (IOException ie){
             ie.printStackTrace();
         }
@@ -57,6 +58,17 @@ public class DBWrite implements Write{
         }catch (IOException ie){
             ie.printStackTrace();
         }
+    }
+    public String canceled(String name, String list){
+        File file = new File(dir, name + "History.txt");
+        try(BufferedWriter br = new BufferedWriter(new FileWriter(file, true))){
+            br.newLine();
+            br.write(list);
+            br.write(" - canceled");
+        }catch (IOException ie){
+            ie.printStackTrace();
+        }
+        return "Reservation cancelled successfully!";
     }
 
 }
