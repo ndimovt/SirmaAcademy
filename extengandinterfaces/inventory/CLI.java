@@ -18,7 +18,6 @@ public class CLI {
     private static Map<Integer, InventoryItem> items = new HashMap<>();
     private static Map<Integer, InventoryItem> unfitItems = new HashMap<>();
     private static Map<Integer, String> content = new HashMap<>();
-    private static Map<Integer, Integer> available = new HashMap<>();
     private static DataBaseCRUD db = new DataBaseCRUD();
 
     public static void main(String[] args) {
@@ -29,7 +28,7 @@ public class CLI {
         System.out.println("Enter money you want to spend: ");
         double sum = scanner.nextDouble();scanner.nextLine();
         while (running) {
-            System.out.println("Choose an option: add, remove item, delete, list, categorize, order, save, check order, pay, exit");
+            System.out.println("Choose an option: add, remove item, delete, list, categorize, order, save, check current order, pay, exit");
             String choice = scanner.nextLine();
             switch (choice.toLowerCase()) {
                 case "add":
