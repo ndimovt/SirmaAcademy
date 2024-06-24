@@ -9,11 +9,9 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.List;
 
-public class DBWrite implements Write{
-    private DBRead dbr = new DBRead();
+public class FileWrite implements Write{
+    private FileRead dbr = new FileRead();
     private File dir = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\room\\reservation\\userAccounts");
     public void createUser(String name, User user){
         File file = null;
