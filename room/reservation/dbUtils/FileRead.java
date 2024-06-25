@@ -3,21 +3,13 @@ package io.github.ndimovt.room.reservation.dbUtils;
 import io.github.ndimovt.room.reservation.BookingInformation;
 import io.github.ndimovt.room.reservation.User;
 
-import java.io.IOException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +17,6 @@ public class FileRead implements Read{
     private Set<Integer> unavailableRooms = new TreeSet<>();
     private User user;
     private File dir = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\room\\reservation\\userAccounts");
-    private File floorDir = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\room\\reservation\\hotelschema");
     public User userAcc(String username){
         File file = null;
         if(!dir.getName().equals(username)) {
@@ -77,47 +68,49 @@ public class FileRead implements Read{
         Pattern pattern = Pattern.compile(".*History\\.txt");
 
         try {
-            Files.walkFileTree(dir.toPath(), new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    Matcher match = pattern.matcher(file.getFileName().toString());
-                    if (match.matches()) {
-                        try (BufferedReader br = new BufferedReader(new FileReader(file.toFile()))) {
-                            String line;
-                            while ((line = br.readLine()) != null) {
-                                if (!line.contains(" - canceled")) {
-                                    String[] parts = line.split("\\s+");
-                                    if (parts.length > 1) {
-                                        String roomPart = parts[1];
-                                        String roomNumberStr = roomPart.replaceAll("[^\\d]", ""); // Remove non-digit characters
-                                        if (!roomNumberStr.isEmpty()) {
-                                            try {
-                                                int roomNumber = Integer.parseInt(roomNumberStr);
-                                                unavailableRooms.add(roomNumber);
-                                            } catch (NumberFormatException e) {
-                                                System.err.println("Invalid room number format in line: " + line);
-                                            }
+            File[] clientHistory = files(dir);
+            for(File file : clientHistory){
+                Matcher match = pattern.matcher(file.getName());
+                if (match.matches()) {
+                    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            if (!line.contains(" - canceled")) {
+                                String[] parts = line.split("\\s+");
+                                if (parts.length > 1) {
+                                    String roomPart = parts[1];
+                                    String[] date = parts[3].split("\\.");
+                                    String roomNumberStr = roomPart.replaceAll("[^\\d]", "");
+                                    int endDate = Integer.parseInt(date[0]) + Integer.parseInt(date[1]) + Integer.parseInt(date[2]);
+                                    if (!roomNumberStr.isEmpty() && (endDate - getCurrentDate() > 0)) {
+                                        try {
+                                            int roomNumber = Integer.parseInt(roomNumberStr);
+                                            unavailableRooms.add(roomNumber);
+                                        } catch (NumberFormatException e) {
+                                            System.err.println("Invalid room number format in line: " + line);
                                         }
                                     }
                                 }
                             }
-                        } catch (IOException ie) {
-                            ie.printStackTrace();
                         }
+                    } catch (IOException ie) {
+                        ie.printStackTrace();
                     }
-                    return FileVisitResult.CONTINUE;
                 }
-            });
-        } catch (IOException ie) {
-            ie.printStackTrace();
+            }
+        } catch (NullPointerException npe) {
+            System.out.println("No history records for this user!");
         }
-
         return unavailableRooms;
     }
-    public static void printFloorSchema(int floor){
-        
+    private int getCurrentDate(){
+        Date d = new Date();
+        return d.getDay() + d.getMonth() + d.getYear();
     }
-
-
-
+    private File[] files(File fileDir){
+        if(fileDir.isDirectory()){
+            return fileDir.listFiles();
+        }
+        return null;
+    }
 }

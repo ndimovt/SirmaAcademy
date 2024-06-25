@@ -2,12 +2,10 @@ package io.github.ndimovt.room.reservation;
 
 import io.github.ndimovt.room.reservation.dbUtils.FileRead;
 import io.github.ndimovt.room.reservation.dbUtils.FileWrite;
+import io.github.ndimovt.room.reservation.hotelschema.PrintRoomSchema;
 import io.github.ndimovt.room.reservation.roomInfo.RoomPrice;
 
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +22,7 @@ public class Menu {
         while(isWorking){
             populateSet();
             unavailable  = fileRead.reservedRooms();
-            System.out.println("Choose option - 1)Register  2)LogIn 3)Check Available rooms 4) Exit");
+            System.out.println("Choose option - 1)Register  2)LogIn 3)Check room prices 4) Exit");
             int choice = inn.nextInt();
             switch (choice){
                 case 1:
@@ -70,7 +68,8 @@ public class Menu {
                                     int floor = inn.nextInt();
                                     inn.nextLine();
                                     if(floor >= 1 && floor < 6){
-
+                                        PrintRoomSchema roomSchema = new PrintRoomSchema();
+                                        roomSchema.printFloor(floor);
                                     }
                                     System.out.println("Select room: ");
                                     String room = inn.nextLine();
@@ -165,9 +164,13 @@ public class Menu {
                         System.out.println("Account with this username does not exists!");
                     }
                     break;
-                //case 3:
-                    //printRooms(available);
-                    //break;
+                case 3:
+                    System.out.println("S - Room with one bed - 50.00lv per night!");
+                    System.out.println("D - Room with two bed - 100.00lv per night!");
+                    System.out.println("T - Room with three bed - 150.00lv per night!");
+                    System.out.println("F - Room with four bed - 200.00lv per night!");
+                    System.out.println("V - VIP room with 2/3 beds - 300.00lv per night!");
+                    break;
                 case 4:
                     isWorking = false;
                     break;
@@ -235,4 +238,5 @@ public class Menu {
     private static void removeDuplicates(Set<Integer> first, Set<Integer> second){
         first.removeAll(second);
     }
+
 }
