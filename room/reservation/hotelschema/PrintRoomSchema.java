@@ -1,6 +1,9 @@
 package io.github.ndimovt.room.reservation.hotelschema;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class PrintRoomSchema {
     private final File firstFloor = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\room\\reservation\\hotelschema\\firstFloor.txt");

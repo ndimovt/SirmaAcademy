@@ -4,11 +4,6 @@ import io.github.ndimovt.room.reservation.BookingInformation;
 import io.github.ndimovt.room.reservation.User;
 
 import java.io.*;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +12,7 @@ public class FileRead implements Read{
     private Set<Integer> unavailableRooms = new TreeSet<>();
     private User user;
     private File dir = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\room\\reservation\\userAccounts");
+    //this method returns User object
     public User userAcc(String username){
         File file = null;
         if(!dir.getName().equals(username)) {
@@ -33,6 +29,7 @@ public class FileRead implements Read{
         }
         return user;
     }
+    //this method returns list of user data with active reservations
     public List<String> history(String dateIn, String dateOut, String userName){
         File file = new File(dir, userName + "History.txt");;
         List<String> roomHistory = new ArrayList<>();
@@ -48,6 +45,7 @@ public class FileRead implements Read{
         }
         return roomHistory;
     }
+    //this method returns object which contains info for uncanceled reservations
     public BookingInformation getInfo(String id, String user){
         File file = new File(dir, user + "History.txt");
         try(BufferedReader br = new BufferedReader(new FileReader(file))){
@@ -63,6 +61,7 @@ public class FileRead implements Read{
         }
         return null;
     }
+    //this method returns set with available rooms based on the date and uncanceled reservations reading all files that contains reservation history
     public Set<Integer> reservedRooms() {
         Set<Integer> unavailableRooms = new TreeSet<>();
         Pattern pattern = Pattern.compile(".*History\\.txt");
