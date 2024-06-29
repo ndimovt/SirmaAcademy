@@ -69,9 +69,8 @@ public class CustomList <T extends Comparable<T>>{
     }
     public void printElements(){
         for(T element : arr){
-            System.out.print(element + " ");
+            System.out.println(element);
         }
-        System.out.println();
     }
     private void resize(int max){
         T[] temp = (T[]) Array.newInstance(arr.getClass().getComponentType(), max);
