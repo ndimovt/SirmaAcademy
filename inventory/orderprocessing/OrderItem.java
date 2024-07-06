@@ -1,4 +1,4 @@
-package io.github.ndimovt.extengandinterfaces.inventory.orderprocessing;
+package io.github.ndimovt.inventory.orderprocessing;
 
 public class OrderItem {
     //separate items from order list

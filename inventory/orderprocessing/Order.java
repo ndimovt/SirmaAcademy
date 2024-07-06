@@ -1,4 +1,4 @@
-package io.github.ndimovt.extengandinterfaces.inventory.orderprocessing;
+package io.github.ndimovt.inventory.orderprocessing;
 
 import java.util.ArrayList;
 import java.util.List;

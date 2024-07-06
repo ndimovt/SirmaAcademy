@@ -1,6 +1,9 @@
-package io.github.ndimovt.extengandinterfaces.inventory.entities;
+package io.github.ndimovt.inventory.entities;
 
 import io.github.ndimovt.extengandinterfaces.inventory.attributes.*;
+import io.github.ndimovt.inventory.attributes.*;
+import io.github.ndimovt.room.reservation.inventory.attributes.*;
+import io.github.ndimovt.room.reservation.roomInfo.inventory.attributes.*;
 
 
 public abstract class AbstractItem implements Breakable, Categorizable, Item, Perishable, Sellable {

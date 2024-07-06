@@ -1,14 +1,14 @@
-package io.github.ndimovt.extengandinterfaces.inventory;
+package io.github.ndimovt.inventory;
 
-import io.github.ndimovt.extengandinterfaces.inventory.datahandling.DataBaseCRUD;
-import io.github.ndimovt.extengandinterfaces.inventory.datahandling.SortOrder;
-import io.github.ndimovt.extengandinterfaces.inventory.entities.ElectronicsItem;
-import io.github.ndimovt.extengandinterfaces.inventory.entities.FragileItem;
-import io.github.ndimovt.extengandinterfaces.inventory.entities.GrocerieItem;
-import io.github.ndimovt.extengandinterfaces.inventory.entities.InventoryItem;
-import io.github.ndimovt.extengandinterfaces.inventory.orderprocessing.Order;
-import io.github.ndimovt.extengandinterfaces.inventory.orderprocessing.OrderItem;
-import io.github.ndimovt.extengandinterfaces.inventory.orderprocessing.PaymentMethods;
+import io.github.ndimovt.inventory.datahandling.DataBaseCRUD;
+import io.github.ndimovt.inventory.datahandling.SortOrder;
+import io.github.ndimovt.inventory.entities.ElectronicsItem;
+import io.github.ndimovt.inventory.entities.FragileItem;
+import io.github.ndimovt.inventory.entities.GrocerieItem;
+import io.github.ndimovt.inventory.entities.InventoryItem;
+import io.github.ndimovt.inventory.orderprocessing.Order;
+import io.github.ndimovt.inventory.orderprocessing.OrderItem;
+import io.github.ndimovt.inventory.orderprocessing.PaymentMethods;
 
 import java.util.*;
 

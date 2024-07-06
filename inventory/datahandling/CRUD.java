@@ -1,6 +1,6 @@
-package io.github.ndimovt.extengandinterfaces.inventory.datahandling;
+package io.github.ndimovt.inventory.datahandling;
 
-import io.github.ndimovt.extengandinterfaces.inventory.entities.InventoryItem;
+import io.github.ndimovt.inventory.entities.InventoryItem;
 
 import java.util.Map;
 

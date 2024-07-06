@@ -1,4 +1,4 @@
-package io.github.ndimovt.extengandinterfaces.inventory.attributes;
+package io.github.ndimovt.inventory.attributes;
 
 public interface Sellable {
     void setPrice(double newPrice);

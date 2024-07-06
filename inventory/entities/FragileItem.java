@@ -1,4 +1,4 @@
-package io.github.ndimovt.extengandinterfaces.inventory.entities;
+package io.github.ndimovt.inventory.entities;
 
 public class FragileItem extends InventoryItem {
     private double weight;

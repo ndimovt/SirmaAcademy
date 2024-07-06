@@ -1,4 +1,4 @@
-package io.github.ndimovt.extengandinterfaces.inventory.datahandling;
+package io.github.ndimovt.inventory.datahandling;
 
 import java.io.File;
 import java.io.IOException;
