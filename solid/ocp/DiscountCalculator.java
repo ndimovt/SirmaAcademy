@@ -1,11 +1,14 @@
 package io.github.ndimovt.solid.ocp;
 
 public class DiscountCalculator {
+    /* using DiscountType enum will not break the code,
+        allowing new discount types to be added freely
+     */
     public double calculateDiscount(String type, double price) {
-        if ("STUDENT".equals(type)) {
-            return price * 0.1;
-        } else if ("SENIOR".equals(type)) {
-            return price * 0.2;
+        if (type.equals(DiscountType.STUDENT)) {
+            return price * DiscountType.STUDENT.getDiscount();
+        } else if (type.equals(DiscountType.SENIOR)) {
+            return price * DiscountType.SENIOR.getDiscount();
         }
         return price;
     }
