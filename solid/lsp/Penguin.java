@@ -1,5 +1,5 @@
 package io.github.ndimovt.solid.lsp;
 
-public class Penguin extends Bird{
+public class Penguin extends NonFlyingBird{
 
 }
