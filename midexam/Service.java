@@ -8,5 +8,6 @@ public interface Service {
     List<Employee> searchEmployeeName(String name);
     List<Employee> searchEmployeeDepartment(String department);
     Map<Integer, Employee> getAllActiveEmployees();
+    Map<Integer, Employee> getAllEmployees();
     void writeEmployee(Map<Integer, Employee> employeeMap);
 }

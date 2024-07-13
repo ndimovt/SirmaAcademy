@@ -1,9 +1,8 @@
 package io.github.ndimovt.midexam;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Employee implements Serializable {
+public class Employee {
     private int id;
     private String name;
     private LocalDate startDate;
@@ -49,11 +48,8 @@ public class Employee implements Serializable {
     public void setDepartment(String department) {
         this.department = department;
     }
-
-
     @Override
     public String toString() {
-        //String endDate = (this.endDate == null)? "null" : String.format("%d-%d-%d",this.startDate.getYear(), this.startDate.getMonthValue(), this.startDate.getDayOfMonth());
         return id+","+name+","+ startDate +","+ endDate +","+ department +","+role +","+ salary;
     }
 }

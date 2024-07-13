@@ -23,6 +23,9 @@ public class EmployeeService implements Service{
     public Map<Integer, Employee> getAllActiveEmployees(){
         return readable.readActiveEmployees();
     }
+    public Map<Integer, Employee> getAllEmployees(){
+        return readable.readAllEmployees();
+    }
     public void writeEmployee(Map<Integer, Employee> employeeMap) {
         writeable.write(employeeMap);
     }

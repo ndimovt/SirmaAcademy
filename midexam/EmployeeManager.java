@@ -1,5 +1,6 @@
 package io.github.ndimovt.midexam;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 public class EmployeeManager implements Manager{
@@ -47,7 +48,19 @@ public class EmployeeManager implements Manager{
             System.out.println("Employee with ID " + id + " not found.");
         }
     }
+    public void fireEmployee(int id){
+        Employee employee = allRecords().get(id);
+        if (employee != null && allRecords().containsKey(id)) {
+            employee.setEndDate(getDate().toString());
+            records.put(employee.getId(), employee);
+        }else{
+            System.out.println("Employee with ID " + id + " not found.");
+        }
+    }
+    private static LocalDate getDate(){
+        return LocalDate.now();
+    }
     private Map<Integer, Employee> allRecords(){
-        return service.getAllActiveEmployees();
+        return service.getAllEmployees();
     }
 }

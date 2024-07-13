@@ -8,4 +8,5 @@ public interface Readable {
     List<Employee> readByName(String name);
     List<Employee> readByDepartment(String department);
     Map<Integer, Employee> readActiveEmployees();
+    Map<Integer, Employee> readAllEmployees();
 }
