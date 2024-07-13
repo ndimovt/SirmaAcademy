@@ -11,7 +11,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 
 public class FileWrite implements Write{
-    private FileRead dbr = new FileRead();
+    private Read dbr;
     private File dir = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\room\\reservation\\userAccounts");
     //this method creates record for a new user
     public void createUser(String name, User user){
