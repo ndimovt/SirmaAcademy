@@ -1,9 +1,13 @@
-package io.github.ndimovt.midexam;
+package io.github.ndimovt.midexam.service;
+
+import io.github.ndimovt.midexam.io.Readable;
+import io.github.ndimovt.midexam.io.Writeable;
+import io.github.ndimovt.midexam.employee.Employee;
 
 import java.util.List;
 import java.util.Map;
 
-public class EmployeeService implements Service{
+public class EmployeeService implements Service {
     private final Readable readable;
     private final Writeable writeable;
 

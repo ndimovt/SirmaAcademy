@@ -1,11 +1,19 @@
 package io.github.ndimovt.midexam;
 
+import io.github.ndimovt.midexam.employee.Employee;
+import io.github.ndimovt.midexam.io.EmployeeReader;
+import io.github.ndimovt.midexam.io.EmployeeWriter;
+import io.github.ndimovt.midexam.manager.EmployeeManager;
+import io.github.ndimovt.midexam.manager.Manager;
+import io.github.ndimovt.midexam.service.EmployeeService;
+import io.github.ndimovt.midexam.service.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import static io.github.ndimovt.midexam.InputValidator.*;
+import static io.github.ndimovt.midexam.util.InputValidator.*;
 
 public class EmployeeManagementApp {
     private static Scanner inn = new Scanner(System.in);

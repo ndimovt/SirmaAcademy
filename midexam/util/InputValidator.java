@@ -1,4 +1,4 @@
-package io.github.ndimovt.midexam;
+package io.github.ndimovt.midexam.util;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -26,12 +26,12 @@ public class InputValidator {
 
     public static int getValidId() {
         int id = 0;
-        boolean valid = false;
-        while (!valid) {
+        boolean isValid = false;
+        while (!isValid) {
             System.out.println("Enter id");
             try {
                 id = inn.nextInt();
-                valid = true;
+                isValid = true;
             } catch (InputMismatchException ime) {
                 System.out.println("Id must contain only numbers!");
                 inn.nextLine();

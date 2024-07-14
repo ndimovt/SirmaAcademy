@@ -1,4 +1,4 @@
-package io.github.ndimovt.midexam;
+package io.github.ndimovt.midexam.manager;
 
 public interface Manager {
     void updateEmployeeDepartment(int id, String department);

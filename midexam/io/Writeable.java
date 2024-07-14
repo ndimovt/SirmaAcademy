@@ -1,4 +1,6 @@
-package io.github.ndimovt.midexam;
+package io.github.ndimovt.midexam.io;
+
+import io.github.ndimovt.midexam.employee.Employee;
 
 import java.util.Map;
 

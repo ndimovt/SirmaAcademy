@@ -1,4 +1,4 @@
-package io.github.ndimovt.midexam;
+package io.github.ndimovt.midexam.employee;
 
 import java.time.LocalDate;
 

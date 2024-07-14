@@ -1,11 +1,13 @@
-package io.github.ndimovt.midexam;
+package io.github.ndimovt.midexam.io;
+
+import io.github.ndimovt.midexam.employee.Employee;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.*;
 
-public class EmployeeReader implements Readable{
+public class EmployeeReader implements Readable {
     private final File file = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\midexam\\employees.csv");
     public String readById(int id){
         try(Scanner reader = new Scanner(file)){

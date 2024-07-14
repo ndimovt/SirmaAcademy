@@ -1,9 +1,12 @@
-package io.github.ndimovt.midexam;
+package io.github.ndimovt.midexam.manager;
+
+import io.github.ndimovt.midexam.service.Service;
+import io.github.ndimovt.midexam.employee.Employee;
 
 import java.time.LocalDate;
 import java.util.Map;
 
-public class EmployeeManager implements Manager{
+public class EmployeeManager implements Manager {
     private Service service;
     private Map<Integer, Employee> records;
     public EmployeeManager(Service service, Map<Integer, Employee> records) {
