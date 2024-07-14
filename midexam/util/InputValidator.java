@@ -5,8 +5,18 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Validating user input requests
+ *
+ */
 public class InputValidator {
     private static Scanner inn = new Scanner(System.in);
+
+    /**
+     * Ensures user enters valid role
+     *
+     * @return String object
+     */
     public static String getValidRole(){
         String role = null;
         boolean isValid = false;
@@ -24,6 +34,11 @@ public class InputValidator {
         return role;
     }
 
+    /**
+     * Ensures user enters valid id
+     *
+     * @return Integer value
+     */
     public static int getValidId() {
         int id = 0;
         boolean isValid = false;
@@ -39,6 +54,12 @@ public class InputValidator {
         }
         return id;
     }
+
+    /**
+     * Ensures user enters valid department name
+     *
+     * @return String object
+     */
     public static String getValidDepartment(){
         String department = null;
         boolean isValid = false;
@@ -56,6 +77,11 @@ public class InputValidator {
         return department;
     }
 
+    /**
+     * Ensures user enters valid employee name
+     *
+     * @return String object
+     */
     public static String getValidName() {
         String name = null;
         boolean isValid = false;
@@ -72,6 +98,12 @@ public class InputValidator {
         }
         return name;
     }
+
+    /**
+     * Ensures user enters valid employee surname
+     *
+     * @return String object
+     */
     public static String getValidSurname(){
         String surname = null;
         boolean isValid = false;
@@ -88,6 +120,12 @@ public class InputValidator {
         }
         return surname;
     }
+
+    /**
+     * Ensures user enters valid salary bigger than 0.00
+     *
+     * @return Double value
+     */
     public static double getValidSalary(){
         double salary = 0.00;
         boolean isValid = false;

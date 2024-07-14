@@ -7,8 +7,19 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Processing the Readable incoming requests
+ *
+ */
 public class EmployeeReader implements Readable {
     private final File file = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\midexam\\employees.csv");
+
+    /**
+     * Returns String representation of object found by id
+     *
+     * @param id the unique identifier of the employee whose data is to be read
+     * @return String or else alert message
+     */
     public String readById(int id){
         try(Scanner reader = new Scanner(file)){
             while(reader.hasNextLine()){
@@ -25,6 +36,13 @@ public class EmployeeReader implements Readable {
         }
         return String.format("Employee with id:%d does not exist or no longer working in the firm!",id);
     }
+
+    /**
+     * Returns List of Employees with a given name
+     *
+     * @param name the unique identifier of the employee whose data is to be read
+     * @return List with records
+     */
     public List<Employee> readByName(String name){
         List<Employee> employees = new ArrayList<>();
         try(Scanner reader = new Scanner(file)){
@@ -45,6 +63,13 @@ public class EmployeeReader implements Readable {
         }
         return employees;
     }
+
+    /**
+     * Returns List of Employees with a given name
+     *
+     * @param department the unique identifier of the employee whose data is to be read
+     * @return List with records
+     */
     public List<Employee> readByDepartment(String department){
         List<Employee> departments = new ArrayList<>();
         try(Scanner reader = new Scanner(file)){
@@ -65,6 +90,12 @@ public class EmployeeReader implements Readable {
         }
         return departments;
     }
+
+    /**
+     * Returns Map of active Employees
+     *
+     * @return map with records
+     */
     public Map<Integer, Employee> readActiveEmployees(){
         Map<Integer, Employee> employeesMap = new HashMap<>();
         try(Scanner reader = new Scanner(file)){
@@ -86,6 +117,12 @@ public class EmployeeReader implements Readable {
         }
         return employeesMap;
     }
+
+    /**
+     * Returns Map of all Employees
+     *
+     * @return map with records
+     */
     public Map<Integer, Employee> readAllEmployees(){
         Map<Integer, Employee> employeesMap = new HashMap<>();
         try(Scanner reader = new Scanner(file)){

@@ -15,9 +15,12 @@ import java.util.Scanner;
 
 import static io.github.ndimovt.midexam.util.InputValidator.*;
 
+/**
+ * App management class
+ *
+ */
 public class EmployeeManagementApp {
     private static Scanner inn = new Scanner(System.in);
-
     public static void main(String[] args) {
         EmployeeService service = new EmployeeService(new EmployeeReader(), new EmployeeWriter());
         Map<Integer, Employee> records = service.getAllEmployees();
@@ -71,6 +74,10 @@ public class EmployeeManagementApp {
         }
     }
 
+    /**
+     * Showing possible options
+     *
+     */
     private static void printOptions() {
         System.out.println("1)Add employee  2)Search Employee by id " +
                 "3)Search Employee by name  4)Search Employee by department " +
@@ -80,6 +87,11 @@ public class EmployeeManagementApp {
                 "11)Exit");
     }
 
+    /**
+     * Adding new record in map
+     *
+     * @param newEmployee Map for records to be stored
+     */
     private static void addNewEmployee(Map<Integer, Employee> newEmployee) {
         int id = getValidId();
         if (!newEmployee.containsKey(id)) {
@@ -91,21 +103,36 @@ public class EmployeeManagementApp {
             Employee employee = new Employee(id, name, LocalDate.now(), null, department, role, salary);
             newEmployee.put(employee.getId(), employee);
         } else {
-            System.out.println("Id:" + id + " already exists!");
+            System.out.printf("Id:%d already exists!\n",id);
         }
     }
 
+    /**
+     * Searching by id
+     *
+     * @param service can take everything implementing Service
+     */
     private static void searchEmployeeById(Service service) {
         int id = getValidId();
         System.out.println(service.searchEmployeeById(id));
     }
 
+    /**
+     * Searching by employee name
+     *
+     * @param service can take everything implementing Service
+     */
     private static void searchEmployeeByName(Service service) {
         String name = getValidName();
         List<Employee> list = service.searchEmployeeName(name);
         list.forEach(System.out::println);
     }
 
+    /**
+     * Searching by department name and prints results
+     *
+     * @param service can take everything implementing Service
+     */
     private static void searchByDepartment(Service service) {
         inn.nextLine();
         String department = getValidDepartment();
@@ -113,6 +140,11 @@ public class EmployeeManagementApp {
         departmentList.forEach(System.out::println);
     }
 
+    /**
+     * Update department in which employee works, using employee id
+     *
+     * @param manager can take everything implementing Manager
+     */
     private static void updateDepartment(Manager manager) {
         int id = getValidId();
         inn.nextLine();
@@ -120,6 +152,13 @@ public class EmployeeManagementApp {
         manager.updateEmployeeDepartment(id, empDepartment);
     }
 
+    /**
+     * Updated employee salary by id
+     *
+     * @param manager can take everything implementing Manager
+     * @param service can take everything implementing Service
+     * @param updatedInfo Map for records to be stored
+     */
     private static void updateEmployeeSalary(Manager manager, Service service, Map<Integer, Employee> updatedInfo) {
         int id = getValidId();
         double newSalary = getValidSalary();
@@ -127,6 +166,13 @@ public class EmployeeManagementApp {
         service.writeEmployee(updatedInfo);
     }
 
+    /**
+     * Updating employee role by id
+     *
+     * @param manager can take everything implementing Manager
+     * @param service can take everything implementing Service
+     * @param updatedInfo Map for records to be stored
+     */
     private static void updateEmployeeRole(Manager manager, Service service, Map<Integer, Employee> updatedInfo) {
         int id = getValidId();
         inn.nextLine();
@@ -135,11 +181,23 @@ public class EmployeeManagementApp {
         service.writeEmployee(updatedInfo);
     }
 
+    /**
+     * Firing employee by id
+     *
+     * @param manager can take everything implementing Manager
+     */
     private static void fireEmployee(Manager manager) {
         int id = getValidId();
         manager.fireEmployee(id);
     }
 
+    /**
+     * Updating employee surname, recommended for women after marriage/divorce
+     *
+     * @param manager can take everything implementing Manager
+     * @param service can take everything implementing Service
+     * @param updatedInfo Map for records to be stored
+     */
     private static void updateSurname(Manager manager, Service service, Map<Integer, Employee> updatedInfo) {
         int id = getValidId();
         inn.nextLine();
@@ -148,6 +206,11 @@ public class EmployeeManagementApp {
         service.writeEmployee(updatedInfo);
     }
 
+    /**
+     * Returns map with all employees currently working
+     *
+     * @param service can take everything implementing Service
+     */
     private static void getActiveEmployees(Service service) {
         Map<Integer, Employee> active = service.getAllActiveEmployees();
         active.forEach((k, v) -> System.out.println(v));
