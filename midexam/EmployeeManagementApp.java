@@ -1,12 +1,11 @@
 package io.github.ndimovt.midexam;
 
 import java.time.LocalDate;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static io.github.ndimovt.midexam.InputValidator.*;
 
 public class EmployeeManagementApp {
     private static Scanner inn = new Scanner(System.in);
@@ -145,100 +144,5 @@ public class EmployeeManagementApp {
         Map<Integer, Employee> active = service.getAllActiveEmployees();
         active.forEach((k, v) -> System.out.println(v));
     }
-    private static String getValidRole(){
-        String role = null;
-        boolean isValid = false;
-        Pattern p = Pattern.compile("[\\d\\!\\@\\$\\%\\^\\,\\&\\*\\(\\)\\[\\]\\{\\}\\=\\`\\~\\?\\'\\_\\<\\>\\;\\:]+|\\s{3,}");
-        while (!isValid) {
-            System.out.println("Enter role:");
-            role = inn.nextLine();
-            Matcher match = p.matcher(role);
-            if (match.find()) {
-                System.out.println("Role must not contain only digits or only special symbols and can't be empty space!");
-            } else {
-                isValid = true;
-            }
-        }
-        return role;
-    }
 
-    private static int getValidId() {
-        int id = 0;
-        boolean valid = false;
-        while (!valid) {
-            System.out.println("Enter id");
-            try {
-                id = inn.nextInt();
-                valid = true;
-            } catch (InputMismatchException ime) {
-                System.out.println("Id must contain only numbers!");
-                inn.nextLine();
-            }
-        }
-        return id;
-    }
-    private static String getValidDepartment(){
-        String department = null;
-        boolean isValid = false;
-        Pattern p = Pattern.compile("[\\d\\!\\@\\$\\%\\^\\.\\#\\,\\&\\*\\(\\)\\[\\]\\{\\}\\+\\=\\`\\~\\?\\'\\_\\<\\>\\;\\:]+|\\s{3,}");
-        while (!isValid) {
-            System.out.println("Enter department:");
-            department = inn.nextLine();
-            Matcher match = p.matcher(department);
-            if (match.find()) {
-                System.out.println("Name must not contain digits or special symbols and can't be empty space!");
-            } else {
-                isValid = true;
-            }
-        }
-        return department;
-    }
-
-    private static String getValidName() {
-        String name = null;
-        boolean isValid = false;
-        Pattern p = Pattern.compile("[\\d\\!\\@\\.\\$\\%\\^\\#\\&\\,\\*\\(\\)\\[\\]\\{\\}\\+\\=\\`\\~\\?\\'\\_\\<\\>\\;\\:]+|\\s{2,}");
-        while (!isValid) {
-            System.out.println("Enter name:");
-            name = inn.nextLine();
-            Matcher match = p.matcher(name);
-            if (match.find()) {
-                System.out.println("Name must not contain digits or special symbols and can't be empty space!");
-            } else {
-                isValid = true;
-            }
-        }
-        return name;
-    }
-    private static String getValidSurname(){
-        String surname = null;
-        boolean isValid = false;
-        Pattern p = Pattern.compile("[\\d\\!\\@\\$\\%\\#\\^\\&\\.\\,\\*\\(\\)\\[\\]\\{\\}\\+\\=\\`\\~\\?\\'\\_\\<\\>\\;\\:\\s]+");
-        while (!isValid) {
-            System.out.println("Enter new surname:");
-            surname = inn.nextLine();
-            Matcher match = p.matcher(surname);
-            if (match.find()) {
-                System.out.println("Surname must not contain digits, special symbols or empty spaces!");
-            } else {
-                isValid = true;
-            }
-        }
-        return surname;
-    }
-    private static double getValidSalary(){
-        double salary = 0.00;
-        boolean isValid = false;
-        while (!isValid) {
-            System.out.println("Enter salary:");
-            salary = inn.nextDouble();
-            if(salary > 0.00) {
-                isValid = true;
-            }else {
-                System.out.println("Salary can't be less than 0.00!");
-                inn.nextLine();
-            }
-        }
-        return salary;
-    }
 }
