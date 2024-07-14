@@ -15,10 +15,13 @@ public class EmployeeWriter implements Writeable{
                     ie.printStackTrace();
                 }});
         }catch (FileNotFoundException fnf){
-            fnf.getMessage();
+            System.out.println("File no present! Please contact your IT support!");
             fnf.printStackTrace();
+            System.exit(0);
         }catch (IOException ie){
+            System.out.println("Error 404!");
             ie.printStackTrace();
+            System.exit(0);
         }
     }
 }

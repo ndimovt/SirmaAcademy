@@ -17,7 +17,9 @@ public class EmployeeReader implements Readable{
                 }
             }
         }catch (FileNotFoundException fnf){
+            System.out.println("File no present! Please contact your IT support!");
             fnf.printStackTrace();
+            System.exit(0);
         }
         return String.format("Employee with id:%d does not exist or no longer working in the firm!",id);
     }
@@ -27,7 +29,7 @@ public class EmployeeReader implements Readable{
             while(reader.hasNextLine()){
                 String line = reader.nextLine();
                 String[] result = line.split(",");
-                if(result[1].equals(name) && result[3].equals("null")){
+                if(result[1].equalsIgnoreCase(name) && result[3].equals("null")){
                     employees.add(new Employee(
                             Integer.parseInt(result[0]), result[1], LocalDate.parse(result[2]), (result[3].equals("null")? "null" : result[3]),
                             result[4], result[5], Double.parseDouble(result[6])
@@ -35,7 +37,9 @@ public class EmployeeReader implements Readable{
                 }
             }
         }catch (FileNotFoundException fnf){
+            System.out.println("File no present! Please contact your IT support!");
             fnf.printStackTrace();
+            System.exit(0);
         }
         return employees;
     }
@@ -45,7 +49,7 @@ public class EmployeeReader implements Readable{
             while(reader.hasNextLine()){
                 String line = reader.nextLine();
                 String[] result = line.split(",");
-                if(result[4].equals(department) && result[3].equals("null")){
+                if(result[4].equalsIgnoreCase(department) && result[3].equals("null")){
                     departments.add(new Employee(
                             Integer.parseInt(result[0]), result[1], LocalDate.parse(result[2]),  (result[3].equals("null")? "null" : result[3]),
                             result[4], result[5], Double.parseDouble(result[6])
@@ -53,7 +57,9 @@ public class EmployeeReader implements Readable{
                 }
             }
         }catch (FileNotFoundException fnf){
+            System.out.println("File no present! Please contact your IT support!");
             fnf.printStackTrace();
+            System.exit(0);
         }
         return departments;
     }
@@ -72,7 +78,9 @@ public class EmployeeReader implements Readable{
                 }
             }
         }catch (FileNotFoundException fnf){
+            System.out.println("File no present! Please contact your IT support!");
             fnf.printStackTrace();
+            System.exit(0);
         }
         return employeesMap;
     }
@@ -82,14 +90,15 @@ public class EmployeeReader implements Readable{
             while(reader.hasNextLine()) {
                 String line = reader.nextLine();
                 String[] result = line.split(",");
-                    Employee employee = new Employee(
-                            Integer.parseInt(result[0]), result[1], LocalDate.parse(result[2]), (result[3].equals("null") ? "null" : result[3]),
-                            result[4], result[5], Double.parseDouble(result[6]));
-
-                    employeesMap.put(employee.getId(), employee);
+                Employee employee = new Employee(
+                        Integer.parseInt(result[0]), result[1], LocalDate.parse(result[2]), (result[3].equals("null") ? "null" : result[3]),
+                        result[4], result[5], Double.parseDouble(result[6]));
+                employeesMap.put(employee.getId(), employee);
             }
         }catch (FileNotFoundException fnf){
+            System.out.println("File no present! Please contact your IT support!");
             fnf.printStackTrace();
+            System.exit(0);
         }
         return employeesMap;
     }
