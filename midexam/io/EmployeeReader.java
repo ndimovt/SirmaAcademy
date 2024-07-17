@@ -2,8 +2,7 @@ package io.github.ndimovt.midexam.io;
 
 import io.github.ndimovt.midexam.employee.Employee;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -45,9 +44,9 @@ public class EmployeeReader implements Readable {
      */
     public List<Employee> readByName(String name){
         List<Employee> employees = new ArrayList<>();
-        try(Scanner reader = new Scanner(file)){
-            while(reader.hasNextLine()){
-                String line = reader.nextLine();
+        try(BufferedReader bfr = new BufferedReader(new FileReader(file))){
+            String line = null;
+            while((line = bfr.readLine()) != null){
                 String[] result = line.split(",");
                 if(result[1].equalsIgnoreCase(name) && result[3].equals("null")){
                     employees.add(new Employee(
@@ -60,6 +59,9 @@ public class EmployeeReader implements Readable {
             System.out.println("File no present! Please contact your IT support!");
             fnf.printStackTrace();
             System.exit(0);
+        }catch (IOException ie){
+            System.out.println("File no present! Please contact your IT support!");
+            ie.printStackTrace();
         }
         return employees;
     }
