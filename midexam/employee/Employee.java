@@ -6,9 +6,7 @@ import java.time.LocalDate;
  * The Employee class
  *
  */
-public class Employee {
-    private int id;
-    private String name;
+public class Employee extends Human{
     private LocalDate startDate;
     private String endDate;
     private String department;
@@ -27,8 +25,7 @@ public class Employee {
      * @param salary Double value
      */
     public Employee(int id, String name, LocalDate startDate, String endDate, String department, String role, double salary) {
-        this.id = id;
-        this.name = name;
+        super(id, name);
         this.startDate = startDate;
         this.endDate = endDate;
         this.department = department;
@@ -42,7 +39,7 @@ public class Employee {
      * @return Integer value
      */
     public int getId() {
-        return id;
+        return super.getId();
     }
 
     /**
@@ -51,7 +48,7 @@ public class Employee {
      * @return String object
      */
     public String getName() {
-        return name;
+        return super.getName();
     }
 
     /**
@@ -60,7 +57,7 @@ public class Employee {
      * @param name String object
      */
     public void setName(String name) {
-        this.name = name;
+        super.setName(name);
     }
 
     /**
@@ -106,6 +103,6 @@ public class Employee {
      */
     @Override
     public String toString() {
-        return id+","+name+","+ startDate +","+ endDate +","+ department +","+role +","+ salary;
+        return super.getId()+","+super.getName()+","+ startDate +","+ endDate +","+ department +","+role +","+ salary;
     }
 }
