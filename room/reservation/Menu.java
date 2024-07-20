@@ -4,6 +4,8 @@ import io.github.ndimovt.room.reservation.dbUtils.FileRead;
 import io.github.ndimovt.room.reservation.dbUtils.FileWrite;
 import io.github.ndimovt.room.reservation.hotelschema.PrintRoomSchema;
 import io.github.ndimovt.room.reservation.roomInfo.RoomPrice;
+import io.github.ndimovt.room.reservation.service.HotelService;
+import io.github.ndimovt.room.reservation.service.Service;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -12,8 +14,7 @@ import java.util.regex.Pattern;
 public class Menu {
     private static final double COMPENSATION = 0.5;
     private static Scanner inn = new Scanner(System.in);
-    private static FileWrite fileWrite = new FileWrite();
-    private static FileRead fileRead = new FileRead();
+    private static Service service = new HotelService(new FileRead(), new FileWrite());
     private static Set<Integer> available = new TreeSet<>();
     private static Set<Integer> unavailable;
     public static void main(String[] args) {
@@ -21,7 +22,7 @@ public class Menu {
         System.out.println("Welcome to Grand Hotel!");
         while(isWorking){
             populateSet();
-            unavailable  = fileRead.reservedRooms();
+            unavailable  = service.reservedRooms();
             System.out.println("Choose option - 1)Register  2)LogIn 3)Check room prices 4) Exit");
             int choice = inn.nextInt();
             switch (choice){
@@ -39,7 +40,7 @@ public class Menu {
                     double deposit = inn.nextDouble();
                     if(deposit >= 0){
                         User user = new User(username, pass, name, surname, deposit);
-                        fileWrite.createUser(user.getUsername(), user);
+                        service.createUser(user.getUsername(), user);
                     }else{
                         System.out.println("Enter sum bigger or equal to 0.0lv!");
                     }
@@ -51,7 +52,7 @@ public class Menu {
                     String userName = inn.nextLine();
                     System.out.println("Enter password: ");
                     String password = inn.nextLine();
-                    User u = fileRead.userAcc(userName);
+                    User u = service.userAccCheck(userName);
                     if(u.getUsername().equals(userName) && u.getPassword().equals(password)){
                         System.out.println("Welcome "+ u.getName());
                         System.out.println("1)Check available rooms 2)Make reservation 3)Check money balance 4)Add money 5)Cancel reservation 6)Return to main menu");
@@ -87,12 +88,12 @@ public class Menu {
                                         if(checkDate(dateIn) && checkDate(dateOut)){
                                             double toPay = totalPrice(room, dateIn, dateOut);
                                             BookingInformation bookInfo = new BookingInformation(u.getUsername(), room, dateIn, dateOut, toPay);
-                                            fileWrite.writeClientHistory(u.getUsername(), bookInfo);
+                                            service.saveClientHistory(u.getUsername(), bookInfo);
                                             System.out.println("Total cost will be: " + toPay);
                                             double result = u.getDeposit() - toPay;
                                             if (result >= 0) {
                                                 System.out.println("Room successfully booked");
-                                                fileWrite.updateMoneyBalance(u.getUsername(), result);
+                                                service.updateBalance(u.getUsername(), result);
                                                 available.remove(takenRoom);
                                                 unavailable.add(takenRoom);
                                             } else {
@@ -112,7 +113,7 @@ public class Menu {
                                     System.out.println("Enter money amount you want to insert");
                                     double amount = inn.nextDouble();
                                     if(amount > 0){
-                                        fileWrite.updateMoneyBalance(u.getUsername(), amount + u.getDeposit());
+                                        service.updateBalance(u.getUsername(), amount + u.getDeposit());
                                         System.out.println("Operation successful!");
                                     }else{
                                         System.out.println("Enter valid sum bigger than 0.0lv !");
@@ -134,14 +135,14 @@ public class Menu {
                                         System.out.println("Enter ending date (day.month.year): ");
                                         String dateOut = inn.nextLine();
                                         if (checkDate(dateIn) && checkDate(dateOut)) {
-                                            List<String> list = fileRead.history(dateIn, dateOut, u.getUsername());
+                                            List<String> list = service.reservationHistory(dateIn, dateOut, u.getUsername());
                                             list.forEach(System.out::println);
                                             System.out.println("Enter reservation id: ");
                                             String id = inn.nextLine();
-                                            BookingInformation bookInfo = fileRead.getInfo(id, u.getUsername());
-                                            System.out.println(fileWrite.canceled(u.getUsername(), bookInfo.toString()));
+                                            BookingInformation bookInfo = service.getActiveReservation(id, u.getUsername());
+                                            System.out.println(service.canceledReservation(u.getUsername(), bookInfo.toString()));
                                             double returnMoney = (bookInfo.getPrice() * COMPENSATION) + u.getDeposit();
-                                            fileWrite.updateMoneyBalance(u.getUsername(), returnMoney);
+                                            service.updateBalance(u.getUsername(), returnMoney);
                                             unavailable.remove(removeRoom);
                                             available.add(removeRoom);
                                         }else{
