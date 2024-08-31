@@ -10,8 +10,8 @@ import java.util.*;
  * Processing the Readable incoming requests
  *
  */
-public class EmployeeReader implements Readable {
-    private final File file = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\midexam\\employees.csv");
+public class EmployeeReader implements Reader {
+    private final File file = new File("employee.csv");
 
     /**
      * Returns String representation of object found by id

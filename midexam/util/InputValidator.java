@@ -17,19 +17,13 @@ public class InputValidator {
      *
      * @return String object
      */
-    public static String getValidRole(){
-        String role = null;
-        boolean isValid = false;
-        Pattern p = Pattern.compile("[\\d\\!\\@\\$\\%\\^\\,\\&\\*\\(\\)\\[\\]\\{\\}\\=\\`\\~\\?\\'\\_\\<\\>\\;\\:]+|\\s{3,}");
-        while (!isValid) {
-            System.out.println("Enter role:");
-            role = inn.nextLine();
-            Matcher match = p.matcher(role);
-            if (match.find()) {
-                System.out.println("Role must not contain only digits or only special symbols and can't be empty space!");
-            } else {
-                isValid = true;
-            }
+    public static String getValidRole() throws IllegalArgumentException{
+        String pattern = "[\\d\\!\\@\\$\\%\\^\\,\\&\\*\\(\\)\\[\\]\\{\\}\\=\\`\\~\\?\\'\\_\\<\\>\\;\\:]+|\\s{3,}";
+        System.out.println("Enter role:");
+        inn.nextLine();
+        String role = inn.nextLine();
+        if(isInputValid(pattern, role) || role.isEmpty()){
+            throw new IllegalArgumentException("Name can't contain special symbols or empty space!");
         }
         return role;
     }
@@ -39,7 +33,7 @@ public class InputValidator {
      *
      * @return Integer value
      */
-    public static int getValidId() {
+    public static int getValidId() throws InputMismatchException{
         int id = 0;
         boolean isValid = false;
         while (!isValid) {
@@ -48,8 +42,8 @@ public class InputValidator {
                 id = inn.nextInt();
                 isValid = true;
             } catch (InputMismatchException ime) {
-                System.out.println("Id must contain only numbers!");
                 inn.nextLine();
+                throw new InputMismatchException("Can't contain letters!");
             }
         }
         return id;
@@ -60,19 +54,12 @@ public class InputValidator {
      *
      * @return String object
      */
-    public static String getValidDepartment(){
-        String department = null;
-        boolean isValid = false;
-        Pattern p = Pattern.compile("[\\d\\!\\@\\$\\%\\^\\.\\#\\,\\&\\*\\(\\)\\[\\]\\{\\}\\+\\=\\`\\~\\?\\'\\_\\<\\>\\;\\:]+|\\s{3,}");
-        while (!isValid) {
-            System.out.println("Enter department:");
-            department = inn.nextLine();
-            Matcher match = p.matcher(department);
-            if (match.find()) {
-                System.out.println("Name must not contain digits or special symbols and can't be empty space!");
-            } else {
-                isValid = true;
-            }
+    public static String getValidDepartment() throws IllegalArgumentException{
+        String pattern = "[\\d\\!\\@\\$\\%\\^\\.\\#\\,\\&\\*\\(\\)\\[\\]\\{\\}\\+\\=\\`\\~\\?\\'\\_\\-\\<\\>\\;\\:]+|\\s{3,}";
+        System.out.println("Enter department(can't include special symbols or empty field!):");
+        String department = inn.nextLine();
+        if(isInputValid(pattern, department) || department.isEmpty()){
+            throw new IllegalArgumentException("Department can't contain special symbols or empty space!");
         }
         return department;
     }
@@ -82,19 +69,12 @@ public class InputValidator {
      *
      * @return String object
      */
-    public static String getValidName() {
-        String name = null;
-        boolean isValid = false;
-        Pattern p = Pattern.compile("[\\d\\!\\@\\.\\$\\%\\^\\#\\&\\,\\*\\(\\)\\[\\]\\{\\}\\+\\=\\`\\~\\?\\'\\_\\<\\>\\;\\:]+|\\s{2,}");
-        while (!isValid) {
-            System.out.println("Enter name:");
-            name = inn.nextLine();
-            Matcher match = p.matcher(name);
-            if (match.find()) {
-                System.out.println("Name must not contain digits or special symbols and can't be empty space!");
-            } else {
-                isValid = true;
-            }
+    public static String getValidName() throws IllegalArgumentException{
+        String pattern = "[\\d\\!\\@\\.\\$\\%\\^\\#\\&\\,\\*\\(\\)\\[\\]\\{\\}\\+\\=\\`\\~\\?\\'\\_\\-\\<\\>\\;\\:]+|\\s{2,}";
+        System.out.println("Enter name(can't include special symbols or empty field!):");
+        String name = inn.nextLine();
+        if (isInputValid(pattern, name) || name.isEmpty()){
+            throw new IllegalArgumentException("Name can't contain special symbols or empty space!");
         }
         return name;
     }
@@ -104,19 +84,13 @@ public class InputValidator {
      *
      * @return String object
      */
-    public static String getValidSurname(){
-        String surname = null;
-        boolean isValid = false;
-        Pattern p = Pattern.compile("[\\d\\!\\@\\$\\%\\#\\^\\&\\.\\,\\*\\(\\)\\[\\]\\{\\}\\+\\=\\`\\~\\?\\'\\_\\<\\>\\;\\:\\s]+");
-        while (!isValid) {
-            System.out.println("Enter new surname:");
-            surname = inn.nextLine();
-            Matcher match = p.matcher(surname);
-            if (match.find()) {
-                System.out.println("Surname must not contain digits, special symbols or empty spaces!");
-            } else {
-                isValid = true;
-            }
+    public static String getValidSurname() throws IllegalArgumentException{
+        String pattern = "[\\d\\!\\@\\$\\%\\#\\^\\&\\.\\,\\*\\(\\)\\[\\]\\{\\}\\+\\=\\`\\~\\?\\'\\_\\<\\>\\;\\:\\s]+";
+        inn.nextLine();
+        System.out.println("Enter new surname(can't include special symbols or empty field!):");
+        String surname = inn.nextLine();
+        if (isInputValid(pattern, surname) || surname.isEmpty()){
+            throw new IllegalArgumentException("Surname can't contain special symbols or empty space!");
         }
         return surname;
     }
@@ -126,19 +100,23 @@ public class InputValidator {
      *
      * @return Double value
      */
-    public static double getValidSalary(){
-        double salary = 0.00;
-        boolean isValid = false;
-        while (!isValid) {
+    public static double getValidSalary() throws InputMismatchException{
+        try {
             System.out.println("Enter salary:");
-            salary = inn.nextDouble();
-            if(salary > 0.00) {
-                isValid = true;
-            }else {
-                System.out.println("Salary can't be less than 0.00!");
-                inn.nextLine();
+            double salary = inn.nextDouble();
+            if (salary > 0.00) {
+                return salary;
+            } else {
+                throw new InputMismatchException("Salary can't be less than 0.00 and can't contain letters!");
             }
+        } catch (InputMismatchException ime) {
+            inn.nextLine();
+            throw new InputMismatchException("Invalid input! Salary must be a number greater than 0.00.");
         }
-        return salary;
+    }
+    private static boolean isInputValid(String regex, String input){
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.find();
     }
 }

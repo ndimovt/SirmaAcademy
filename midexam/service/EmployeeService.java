@@ -1,9 +1,10 @@
 package io.github.ndimovt.midexam.service;
 
-import io.github.ndimovt.midexam.io.Readable;
-import io.github.ndimovt.midexam.io.Writeable;
+import io.github.ndimovt.midexam.io.Reader;
+import io.github.ndimovt.midexam.io.Writer;
 import io.github.ndimovt.midexam.employee.Employee;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -12,18 +13,18 @@ import java.util.Map;
  *
  */
 public class EmployeeService implements Service {
-    private final Readable readable;
-    private final Writeable writeable;
+    private final Reader reader;
+    private final Writer writer;
 
     /**
      * Instantiates new Employee Service
      *
-     * @param readable can work with everything implementing Readable
-     * @param writeable can work with everything implementing Writable
+     * @param reader can work with everything implementing Readable
+     * @param writer can work with everything implementing Writable
      */
-    public EmployeeService(Readable readable, Writeable writeable) {
-        this.readable = readable;
-        this.writeable = writeable;
+    public EmployeeService(Reader reader, Writer writer) {
+        this.reader = reader;
+        this.writer = writer;
     }
 
     /**
@@ -33,7 +34,7 @@ public class EmployeeService implements Service {
      * @return String object
      */
     public String searchEmployeeById(int id){
-        return readable.readById(id);
+        return reader.readById(id);
     }
 
     /**
@@ -43,7 +44,7 @@ public class EmployeeService implements Service {
      * @return List with records
      */
     public List<Employee> searchEmployeeName(String name){
-        return readable.readByName(name);
+        return reader.readByName(name);
     }
 
     /**
@@ -53,7 +54,7 @@ public class EmployeeService implements Service {
      * @return List with records
      */
     public List<Employee> searchEmployeeDepartment(String department){
-        return readable.readByDepartment(department);
+        return reader.readByDepartment(department);
     }
 
     /**
@@ -62,7 +63,7 @@ public class EmployeeService implements Service {
      * @return Map with records
      */
     public Map<Integer, Employee> getAllActiveEmployees(){
-        return readable.readActiveEmployees();
+        return reader.readActiveEmployees();
     }
 
     /**
@@ -71,7 +72,7 @@ public class EmployeeService implements Service {
      * @return Map with records
      */
     public Map<Integer, Employee> getAllEmployees(){
-        return readable.readAllEmployees();
+        return reader.readAllEmployees();
     }
 
     /**
@@ -79,7 +80,7 @@ public class EmployeeService implements Service {
      *
      * @param employeeMap Map with records
      */
-    public void writeEmployee(Map<Integer, Employee> employeeMap) {
-        writeable.write(employeeMap);
+    public void writeEmployee(Map<Integer, Employee> employeeMap) throws IOException {
+        writer.write(employeeMap);
     }
 }

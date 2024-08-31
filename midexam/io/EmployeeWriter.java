@@ -9,14 +9,14 @@ import java.util.Map;
  * Process writing of a map to a file
  *
  */
-public class EmployeeWriter implements Writeable {
+public class EmployeeWriter implements Writer {
     /**
      * Writes map content to .csv file
      *
      * @param map with records to be written
      */
     public void write(Map<Integer, Employee> map){
-        File file = new File("C:\\Users\\Nikolai\\IdeaProjects\\SirmaAcademy\\src\\main\\java\\io\\github\\ndimovt\\midexam\\employees.csv");
+        File file = new File("employee.csv");
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
             map.forEach((k,v) -> {
                 try{

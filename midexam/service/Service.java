@@ -2,6 +2,7 @@ package io.github.ndimovt.midexam.service;
 
 import io.github.ndimovt.midexam.employee.Employee;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -53,5 +54,5 @@ public interface Service {
      *
      * @param employeeMap Map with records
      */
-    void writeEmployee(Map<Integer, Employee> employeeMap);
+    void writeEmployee(Map<Integer, Employee> employeeMap) throws IOException;
 }

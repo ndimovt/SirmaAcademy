@@ -8,7 +8,9 @@ import io.github.ndimovt.midexam.manager.Manager;
 import io.github.ndimovt.midexam.service.EmployeeService;
 import io.github.ndimovt.midexam.service.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -21,7 +23,7 @@ import static io.github.ndimovt.midexam.util.InputValidator.*;
  */
 public class EmployeeManagementApp {
     private static Scanner inn = new Scanner(System.in);
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         EmployeeService service = new EmployeeService(new EmployeeReader(), new EmployeeWriter());
         Map<Integer, Employee> records = service.getAllEmployees();
         Manager manager = new EmployeeManager(service, records);
@@ -73,11 +75,6 @@ public class EmployeeManagementApp {
             }
         }
     }
-
-    /**
-     * Showing possible options
-     *
-     */
     private static void printOptions() {
         System.out.println("1)Add employee  2)Search Employee by id " +
                 "3)Search Employee by name  4)Search Employee by department " +
@@ -86,131 +83,89 @@ public class EmployeeManagementApp {
                 "9)Change surname(only for women after marriage/divorce)  10)Check all active employees " +
                 "11)Exit");
     }
-
-    /**
-     * Adding new record in map
-     *
-     * @param newEmployee Map for records to be stored
-     */
     private static void addNewEmployee(Map<Integer, Employee> newEmployee) {
-        int id = getValidId();
-        if (!newEmployee.containsKey(id)) {
+        try {
+            int id = getValidId();
             inn.nextLine();
-            String name = getValidName();
-            String department = getValidDepartment();
-            String role = getValidRole();
-            double salary = getValidSalary();
-            Employee employee = new Employee(id, name, LocalDate.now(), null, department, role, salary);
-            newEmployee.put(employee.getId(), employee);
-        } else {
-            System.out.printf("Id:%d already exists!\n",id);
+            if (!newEmployee.containsKey(id)) {
+                String name = getValidName();
+                inn.nextLine();
+                String department = getValidDepartment();
+                String role = getValidRole();
+                double salary = getValidSalary();
+                Employee employee = new Employee(id, name, LocalDate.now(), null, department, role, salary);
+                newEmployee.put(employee.getId(), employee);
+            } else {
+                System.out.printf("Id:%d already exists!\n", id);
+            }
+        }catch (InputMismatchException | IllegalArgumentException ie){
+            System.out.println(ie.getMessage());
         }
     }
-
-    /**
-     * Searching by id
-     *
-     * @param service can take everything implementing Service
-     */
     private static void searchEmployeeById(Service service) {
         int id = getValidId();
         System.out.println(service.searchEmployeeById(id));
     }
-
-    /**
-     * Searching by employee name
-     *
-     * @param service can take everything implementing Service
-     */
     private static void searchEmployeeByName(Service service) {
         String name = getValidName();
         List<Employee> list = service.searchEmployeeName(name);
         list.forEach(System.out::println);
     }
-
-    /**
-     * Searching by department name and prints results
-     *
-     * @param service can take everything implementing Service
-     */
     private static void searchByDepartment(Service service) {
         inn.nextLine();
         String department = getValidDepartment();
         List<Employee> departmentList = service.searchEmployeeDepartment(department);
         departmentList.forEach(System.out::println);
     }
-
-    /**
-     * Update department in which employee works, using employee id
-     *
-     * @param manager can take everything implementing Manager
-     */
     private static void updateDepartment(Manager manager) {
-        int id = getValidId();
-        inn.nextLine();
-        String empDepartment = getValidDepartment();
-        manager.updateEmployeeDepartment(id, empDepartment);
+        try {
+            int id = getValidId();
+            inn.nextLine();
+            String empDepartment = getValidDepartment();
+            manager.updateEmployeeDepartment(id, empDepartment);
+        }catch (IllegalArgumentException | InputMismatchException ie){
+            System.out.println(ie.getMessage());
+        }
     }
-
-    /**
-     * Updated employee salary by id
-     *
-     * @param manager can take everything implementing Manager
-     * @param service can take everything implementing Service
-     * @param updatedInfo Map for records to be stored
-     */
-    private static void updateEmployeeSalary(Manager manager, Service service, Map<Integer, Employee> updatedInfo) {
-        int id = getValidId();
-        double newSalary = getValidSalary();
-        manager.updateEmployeeSalary(id, newSalary);
-        service.writeEmployee(updatedInfo);
+    private static void updateEmployeeSalary(Manager manager, Service service, Map<Integer, Employee> updatedInfo) throws IOException {
+        try {
+            int id = getValidId();
+            double newSalary = getValidSalary();
+            manager.updateEmployeeSalary(id, newSalary);
+            service.writeEmployee(updatedInfo);
+        }catch (IllegalArgumentException | InputMismatchException ie) {
+            System.out.println(ie.getMessage());
+        }
     }
-
-    /**
-     * Updating employee role by id
-     *
-     * @param manager can take everything implementing Manager
-     * @param service can take everything implementing Service
-     * @param updatedInfo Map for records to be stored
-     */
-    private static void updateEmployeeRole(Manager manager, Service service, Map<Integer, Employee> updatedInfo) {
-        int id = getValidId();
-        inn.nextLine();
-        String newRole = getValidRole();
-        manager.updateEmployeeRole(id, newRole);
-        service.writeEmployee(updatedInfo);
+    private static void updateEmployeeRole(Manager manager, Service service, Map<Integer, Employee> updatedInfo) throws IOException {
+        try{
+            int id = getValidId();
+            inn.nextLine();
+            String newRole = getValidRole();
+            manager.updateEmployeeRole(id, newRole);
+            service.writeEmployee(updatedInfo);
+        }catch (IllegalArgumentException | InputMismatchException ie) {
+            System.out.println(ie.getMessage());
+        }
     }
-
-    /**
-     * Firing employee by id
-     *
-     * @param manager can take everything implementing Manager
-     */
     private static void fireEmployee(Manager manager) {
-        int id = getValidId();
-        manager.fireEmployee(id);
+        try{
+            int id = getValidId();
+            manager.fireEmployee(id);
+        }catch (IllegalArgumentException | InputMismatchException ie){
+            System.out.println(ie.getMessage());
+        }
     }
-
-    /**
-     * Updating employee surname, recommended for women after marriage/divorce
-     *
-     * @param manager can take everything implementing Manager
-     * @param service can take everything implementing Service
-     * @param updatedInfo Map for records to be stored
-     */
-    private static void updateSurname(Manager manager, Service service, Map<Integer, Employee> updatedInfo) {
-        int id = getValidId();
-        inn.nextLine();
-        String newSurname = getValidSurname();
-        manager.updateEmployeeSurname(id, newSurname);
-        service.writeEmployee(updatedInfo);
+    private static void updateSurname(Manager manager, Service service, Map<Integer, Employee> updatedInfo) throws IOException {
+        try {
+            int id = getValidId();
+            String newSurname = getValidSurname();
+            manager.updateEmployeeSurname(id, newSurname);
+            service.writeEmployee(updatedInfo);
+        }catch (IllegalArgumentException | InputMismatchException ie){
+            System.out.println(ie.getMessage());
+        }
     }
-
-    /**
-     * Returns map with all employees currently working
-     *
-     * @param service can take everything implementing Service
-     */
     private static void getActiveEmployees(Service service) {
         Map<Integer, Employee> active = service.getAllActiveEmployees();
         active.forEach((k, v) -> System.out.println(v));

@@ -9,7 +9,7 @@ import java.util.Map;
  * Readable interface
  *
  */
-public interface Readable {
+public interface Reader {
     /**
      * Reads data associated with employee id
      *
