@@ -25,7 +25,7 @@ public interface Service {
      * @param name the unique identifier of the employee whose data is to be read
      * @return List with records by a given criteria
      */
-    List<Employee> searchEmployeeName(String name);
+    Employee searchEmployeeName(String name);
 
     /**
      * Returns List with Employees by a given department

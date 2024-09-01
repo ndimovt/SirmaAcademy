@@ -24,7 +24,7 @@ public interface Reader {
      * @param name the unique identifier of the employee whose data is to be read
      * @return String object
      */
-    List<Employee> readByName(String name);
+    Employee readByName(String name);
 
     /**
      * Reads data associated with employee department

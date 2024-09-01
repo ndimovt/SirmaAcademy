@@ -43,7 +43,7 @@ public class EmployeeService implements Service {
      * @param name the unique identifier of the employee whose data is to be read
      * @return List with records
      */
-    public List<Employee> searchEmployeeName(String name){
+    public Employee searchEmployeeName(String name){
         return reader.readByName(name);
     }
 

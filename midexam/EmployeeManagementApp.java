@@ -10,10 +10,7 @@ import io.github.ndimovt.midexam.service.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static io.github.ndimovt.midexam.util.InputValidator.*;
 
@@ -103,24 +100,34 @@ public class EmployeeManagementApp {
         }
     }
     private static void searchEmployeeById(Service service) {
-        int id = getValidId();
-        System.out.println(service.searchEmployeeById(id));
+        try {
+            int id = getValidId();
+            System.out.println(service.searchEmployeeById(id));
+        }catch (NumberFormatException nfe){
+            System.out.println(nfe.getMessage());
+        }
     }
     private static void searchEmployeeByName(Service service) {
-        String name = getValidName();
-        List<Employee> list = service.searchEmployeeName(name);
-        list.forEach(System.out::println);
+        try {
+            String name = getValidName();
+            Employee list = service.searchEmployeeName(name);
+            System.out.println(list);
+        }catch (IllegalArgumentException ilae){
+            System.out.println(ilae.getMessage());
+        }
     }
     private static void searchByDepartment(Service service) {
-        inn.nextLine();
-        String department = getValidDepartment();
-        List<Employee> departmentList = service.searchEmployeeDepartment(department);
-        departmentList.forEach(System.out::println);
+        try {
+            String department = getValidDepartment();
+            List<Employee> departmentList = service.searchEmployeeDepartment(department);
+            departmentList.forEach(System.out::println);
+        }catch (IllegalArgumentException | InputMismatchException ie){
+            System.out.println(ie.getMessage());
+        }
     }
     private static void updateDepartment(Manager manager) {
         try {
             int id = getValidId();
-            inn.nextLine();
             String empDepartment = getValidDepartment();
             manager.updateEmployeeDepartment(id, empDepartment);
         }catch (IllegalArgumentException | InputMismatchException ie){

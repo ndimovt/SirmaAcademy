@@ -57,6 +57,7 @@ public class InputValidator {
     public static String getValidDepartment() throws IllegalArgumentException{
         String pattern = "[\\d\\!\\@\\$\\%\\^\\.\\#\\,\\&\\*\\(\\)\\[\\]\\{\\}\\+\\=\\`\\~\\?\\'\\_\\-\\<\\>\\;\\:]+|\\s{3,}";
         System.out.println("Enter department(can't include special symbols or empty field!):");
+        inn.nextLine();
         String department = inn.nextLine();
         if(isInputValid(pattern, department) || department.isEmpty()){
             throw new IllegalArgumentException("Department can't contain special symbols or empty space!");
